@@ -74,7 +74,7 @@ void login()
     cin >> password;  // Read the password from the user
 
     // Special case for admin login
-    if (userID == "admin" && password == "admin")
+    if (userID == "admin" && password == "iYamAnAdmin3412")
     {
         AdminMenu();  // Call the admin menu function
         return;  // Exit the login function after admin login
