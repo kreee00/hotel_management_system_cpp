@@ -193,6 +193,7 @@ void AdminMenu()
 }
 
 // The 'mainMenu()' function is the main menu for registered users.
+
 void mainMenu()
 {
     int choice;
