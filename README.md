@@ -1,4 +1,4 @@
-# Hotel Reservation System
+# One Night Stand Hotel <3 
 
 ## Description
 
