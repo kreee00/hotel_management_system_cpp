@@ -4,13 +4,12 @@
 
 using namespace std;
 
-//I'm testing if i can update the main repo in website
-
 // Function prototypes
 void login();
 void registration();
 void forgot();
-void mainMenu();
+void userMenu();
+
 
 // Declare variables for room prices and quantities
 int single = 65, twin = 100;
@@ -25,12 +24,14 @@ int Total_rooms = 0, Total_towel = 0, Total_drinks = 0, Total_snacks = 0, Total_
 
 int count = 0;  // A variable to track login attempts
 string userID, password, id, pass;  // Strings to store user credentials
-void AdminMenu();  // Function prototype for the admin menu
+void adminMenu();  // Function prototype for the admin menu
 
 int main()
 {
-    int c;
-    cout << "\t\t\t_________________________________________________________________\n\n\n";
+    int choice;
+    bool isValidChoice = false;
+    do{
+        cout << "\t\t\t_________________________________________________________________\n\n\n";
     cout << "\t\t\t                  Welcome to the login page                      \n\n\n";
     cout << "\t\t\t ___________________         Menu        _______________________ \n\n\n";
     cout << " ";
@@ -39,10 +40,10 @@ int main()
     cout << "\t| Press 3 if you forgot your password" << endl;
     cout << "\t| Press 4 to EXIT" << endl;
     cout << "\n\t\t\t Please enter your choice: ";
-    cin >> c;  // Read the user's choice from the input
+    cin >> choice;  // Read the user's choice from the input
     cout << endl;
 
-    switch (c)  // Handle the user's choice
+    switch (choice)  // Handle the user's choice
     {
     case 1:
         registration();  // Call the registration function
@@ -57,10 +58,12 @@ int main()
         cout << "\t\t\t Thank you! \n\n";  // Display a farewell message
         break;
     default:
-        system("cls");
-        cout << "\t\t\t Please select from the options given above \n" << endl;
-        main();  // Return to the main menu if an invalid choice is made
+    cout << "\t\t\t Invalid choice. Please select from the options given above \n" << endl;
+        isValidChoice = false;
+    
+        
     }
+    } while (!isValidChoice);
 }
 
 // The 'login()' function handles user login.
@@ -136,14 +139,14 @@ void forgot()
     case 1:
     {
         int count = 0;
-        string suserID, sID, spass;
+        string fuserID, sID, spass;
         cout << "\n\t\t\t Enter the username which you remembered: ";
-        cin >> suserID;  // Read the remembered username from the user
+        cin >> fuserID;  // Read the remembered username from the user
 
         ifstream f2("records.txt");  // Open the file for reading user records
         while (f2 >> sID >> spass)
         {
-            if (sID == suserID)
+            if (sID == fuserID)
             {
                 count = 1;  // Set the count to 1 if the username is found
             }
@@ -168,7 +171,7 @@ void forgot()
         break;
     default:
         cout << "\t\t\t Wrong Choice! Please try again" << endl;
-        main();
+        
     }
 }
 
@@ -178,15 +181,34 @@ void AdminMenu()
     int choice;
     cout << "Hello Admin, what would you like to review?" << endl;
     cout << "___________________________________________" << endl;
-    cout << "1. Available rooms left \n2. Available amenities left \n3. Revenue of the day" << endl;
+    cout << "1. Available rooms left \n2. Available amenities left \n3. Revenue of the day \n4. Reset records" << endl;
     cout << "Choice of action: ";
     cin >> choice;  // Read the admin's choice
 
     switch (choice)
     {
-    case 1:
+    case 1:{
         // Handle the case for reviewing available rooms
         // (You can add code here for this functionality)
+        break;
+    }
+    case 2:{
+        // Handle the case for reviewing available amenities
+        // (You can add code here for this functionality)
+        break;
+        }
+    case 3: {
+        // Handle the case for reviewing revenue
+        // (You can add code here for this functionality)
+        break;
+    }   
+    case 4: {
+        // Handle the case for resetting records
+        // (You can add code here for this functionality)
+        break;
+    }   
+    default:
+        cout << "Invalid choice. Please try again." << endl;
         break;
     // Handle other cases for reviewing amenities and revenue (you can add code here)
     }
