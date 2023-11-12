@@ -2,19 +2,7 @@
 #include <fstream>   // Include the file handling library
 #include <string.h>  // Include the string manipulation library
 
-using namespace std;
-
-// Function prototypes
-void login();
-void registration();
-void forgot();
-void AdminMenu();  // Function prototype for the admin menu
-void viewRooms();  // Function prototype for the viewRooms function
-void viewAmenities();  // Function prototype for the viewAmenities function
-void bookRoom();  // Function prototype for the bookRoom function
-void viewPrices();  // Function prototype for the viewPrices function
-void salesReport();  // Function prototype for the salesReport function
-void userMenu();  // Function prototype for the user menu
+using namespace std;  // Use the standard namespace
 
 // Declare variables for room prices and quantities
 int single = 65, twin = 100;
