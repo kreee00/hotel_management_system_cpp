@@ -1,8 +1,6 @@
-# Hotel Reservation System
+# One Night Stand Hotel
 
-## Description
-
-The Hotel Reservation System is a C++ application that allows users to register, login, and book rooms in a hotel. It also provides functionality for administrators to review available rooms, amenities, and revenue of the day. This system is designed as an educational project.
+The One Night Stand Hotel is a C++ application that allows users to register, login, and book rooms in a hotel. It also provides functionality for administrators to review available rooms, amenities, and revenue of the day. This system is designed as an educational project.
 
 ## Team Members
 
