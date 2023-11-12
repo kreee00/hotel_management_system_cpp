@@ -205,65 +205,61 @@ int main(){
     }
 
     void bookRoom(){
-        // Prompt the user to select a room type and quantity
-        cout << "\t\t\t _________________________________________________________________ \n\n\n";
-        cout << "\t\t\t\t\t\t\t Room Booking \n\n\n";
-        cout << "\t\t\t _________________________________________________________________ \n\n\n";
-        cout << "\t\t\t\t\t\t Room Type \t Price \t Quantity \n\n";
-        cout << "\t\t\t\t\t\t 1. Single \t $65 \t " << Qsingle << endl;
-        cout << "\t\t\t\t\t\t 2. Twin \t $100 \t " << Qtwin << endl;
-        cout << "\n\n\n";
-        cout << "\t\t\t Please enter your choice: ";
-        cin >> choice;
-        cout << "\t\t\t Please enter the quantity: ";
-        cin >> quant;
+    // Prompt the user to select a room type
+    cout << "\t\t\t _________________________________________________________________ \n\n\n";
+    cout << "\t\t\t\t\t\t\t Room Booking \n\n\n";
+    cout << "\t\t\t _________________________________________________________________ \n\n\n";
+    cout << "\t\t\t\t\t\t Room Type \t Price \n\n";
+    cout << "\t\t\t\t\t\t 1. Single \t $65 \n";
+    cout << "\t\t\t\t\t\t 2. Twin \t\t $100 \n";
+    cout << "\n\n\n";
+    cout << "\t\t\t\t\t\t Enter your choice: ";
+    cin >> choice;
 
-        // Calculate the total price for the selected room type and quantity
-        switch (choice)
-        {
-            case 1:
-                if(Qsingle >= quant){
-                    Total_rooms = single * quant;
-                    Qsingle -= quant;
-                    Stwin += quant;
-                }
-                else{
-                    cout << "\t\t\t Insufficient quantity. Please try again. \n\n";
-                    bookRoom();  // Call the bookRoom function recursively
-                }
-                break;
-            case 2:
-                if(Qtwin >= quant){
-                    Total_rooms = twin * quant;
-                    Qtwin -= quant;
-                    Stwin += quant;
-                }
-                else{
-                    cout << "\t\t\t Insufficient quantity. Please try again. \n\n";
-                    bookRoom();  // Call the bookRoom function recursively
-                }
-                break;
-            default:
-                cout << "\t\t\t Invalid choice. Please try again. \n\n";
-                bookRoom();  // Call the bookRoom function recursively
-        }
+    // Prompt the user to enter the number of rooms to book
+    cout << "\n\n\n";
+    cout << "\t\t\t _________________________________________________________________ \n\n\n";
+    cout << "\t\t\t\t\t\t Room Booking \n\n\n";
+    cout << "\t\t\t _________________________________________________________________ \n\n\n";
+    cout << "\t\t\t\t\t\t Enter the number of rooms to book: ";
+    cin >> quant;
 
-        // Display the total price for the selected room type and quantity
-        cout << "\t\t\t _________________________________________________________________ \n\n\n";
-        cout << "\t\t\t\t\t\t\t Room Booking \n\n\n";
-        cout << "\t\t\t _________________________________________________________________ \n\n\n";
-        cout << "\t\t\t\t\t\t Room Type \t Quantity \t Total Price \n\n";
-        switch (choice)
-        {
-            case 1:
-                cout << "\t\t\t\t\t\t Single \t " << quant << " \t\t $" << Total_rooms << endl;
-                break;
-            case 2:
-                cout << "\t\t\t\t\t\t Twin \t\t " << quant << " \t\t $" << Total_rooms << endl;
-                break;
-        }
-        cout << "\n\n\n";
+    // Calculate the total price for the booking
+    if (choice == 1){
+        total_room = single * quant;
+        Qsingle -= quant;
+        Ssingle += quant;
+        Total_rooms += total_room;
     }
+    else if (choice == 2){
+        total_room = twin * quant;
+        Qtwin -= quant;
+        Stwin += quant;
+        Total_rooms += total_room;
+    }
+
+    // Write the booking data to a file
+    ofstream bookingFile;
+    bookingFile.open("booking.txt", ios::app);
+    bookingFile << "Room Type: " << choice << "\n";
+    bookingFile << "Number of Rooms: " << quant << "\n";
+    bookingFile << "Total Price: " << total_room << "\n\n";
+    bookingFile.close();
+
+    // Display the booking confirmation
+    cout << "\n\n\n";
+    cout << "\t\t\t _________________________________________________________________ \n\n\n";
+    cout << "\t\t\t\t\t\t Room Booking Confirmation \n\n\n";
+    cout << "\t\t\t _________________________________________________________________ \n\n\n";
+    cout << "\t\t\t\t\t\t Room Type \t Quantity \t Total Price \n\n";
+    if (choice == 1){
+        cout << "\t\t\t\t\t\t Single \t " << quant << " \t\t $" << total_room << endl;
+    }
+    else if (choice == 2){
+        cout << "\t\t\t\t\t\t Twin \t\t " << quant << " \t\t $" << total_room << endl;
+    }
+    cout << "\n\n\n";
+}
 
     void viewPrices(){
         // Display the prices for each item
@@ -300,3 +296,5 @@ int main(){
         cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t Total Sales: $" << total_sales << endl;
         cout << "\n\n\n";
     }
+
+

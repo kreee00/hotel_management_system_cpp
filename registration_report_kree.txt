@@ -1,4 +1,0 @@
-Registration ID: kree
-Room Type: 2
-Cost: $100
-----------------------
