@@ -10,26 +10,28 @@ void registration();
 void forgot();
 void AdminMenu();  // Function prototype for the admin menu
 void viewRooms();  // Function prototype for the viewRooms function
+void viewAmenities();  // Function prototype for the viewAmenities function
 void bookRoom();  // Function prototype for the bookRoom function
 void viewPrices();  // Function prototype for the viewPrices function
 void salesReport();  // Function prototype for the salesReport function
+void userMenu();  // Function prototype for the user menu
 
 // Declare variables for room prices and quantities
 int single = 65, twin = 100;
-int Qsingle = 20, Qtwin = 40, Qtowel = 10, Qdrinks = 10, Qsnacks = 10, Qpillow = 10;
+int Qsingle = 20, Qtwin = 40, Qtowel = 75, Qwater = 100, Qbiscuit = 100, Qpillow = 75;
 int quant, choice, total_room = 0;
 
 // Declare variables to keep track of items sold
-int Ssingle = 0, Stwin = 0, Stowel = 10, Sdrinks = 10, Ssnacks = 10, Spillow = 10;
+int Ssingle = 0, Stwin = 0, Stowel = 0, Swater = 0, Sbiscuit = 0, Spillow = 0;
 
 // Declare variables to track the total price for each item
-int Total_rooms = 0, Total_towel = 0, Total_drinks = 0, Total_snacks = 0, Total_pillow = 0;
+int Total_rooms = 0, Total_towel = 0, Total_water = 0, Total_biscuit = 0, Total_pillow = 0;
 
 int count = 0;  // A variable to track login attempts
 string userID, password, id, pass;  // Strings to store user credentials
 
 int main(){
-    int choice;
+    int mainmenuchoice;
     
         cout << "\t\t\t_________________________________________________________________\n\n\n";
         cout << "\t\t\t                  Welcome to the login page                      \n\n\n";
@@ -40,10 +42,10 @@ int main(){
         cout << "\t| Press 3 if you forgot your password" << endl;
         cout << "\t| Press 4 to EXIT" << endl;
         cout << "\n\t\t\t Please enter your choice: ";
-        cin >> choice;  // Read the user's choice from the input
+        cin >> mainmenuchoice;  // Read the user's choice from the input
         cout << endl;
 
-        switch (choice)
+        switch (mainmenuchoice)
         {
             case 1:
                 registration();  // Call the registration function
@@ -74,21 +76,31 @@ int main(){
         cin >> password;
 
         // Check if the user ID and password match the stored credentials
-        if(userID == id && password == pass){
-            cout << "\n\t\t\t Login successful! \n\n";
+        if(userID == "admin69" && password == "beverlyHills178"){
+            cout << "\n\t\t\t Login admin successful! \n\n";
             AdminMenu();  // Call the admin menu function
         }
-        else{
-            count++;  // Increment the login attempts counter
-            cout << "\n\t\t\t Invalid credentials. Please try again. \n\n";
-            if(count < 3){
-                login();  // Call the login function recursively
-            }
-            else{
-                cout << "\n\t\t\t Too many failed login attempts. Please try again later. \n\n";
-                exit(0);  // Terminate the program
-            }
+        ifstream input("credentials.txt");  // Open the file for reading user records
+    while (input >> id >> pass)
+    {
+        if (id == userID && pass == password)
+        {
+            count = 1;  // Set the login attempt count to 1
+            system("cls");  // Clear the screen
         }
+    }
+    input.close();  // Close the file
+
+    if (count == 1)
+    {
+        cout << userID << "\n Your LOGIN is successful \n Thanks for logging in! \n\n";
+        userMenu();  // Call the main menu function for regular users
+    }
+    else
+    {
+        cout << "\n LOGIN ERROR \n Please check your username and password \n";
+        main();  // Return to the main menu if login fails
+    }
     }
 
     void registration(){
@@ -157,16 +169,129 @@ int main(){
         }
     }
 
+    void userMenu()
+{
+    int choice;
+    cout << "\t\t\t ___________________         Customer Menu        _______________________ \n\n\n";
+            cout << " ";
+            cout << "\t| Press 1 to book room" << endl;
+            cout << "\t| Press 2 to request amenities" << endl;
+            cout << "\t| Press 3 to view current bill" << endl;
+            cout << "\t| Press 4 to log out" << endl;
+            cout << "\n\t\t\t Please enter your choice: ";
+            cin >> choice;  // Read the user's choice from the input
+            cout << endl;
+
+    switch (choice)
+    {
+    case 1:
+    {
+        cout << "\nWhat room do you want?" << endl;
+        cout << "1. Single = RM65 \n2. Twin = RM100" << endl;
+        int roomChoice;
+        cout << "Room choice: ";
+        cin >> roomChoice;  // Read the user's room choice
+        while (roomChoice != 1 && roomChoice != 2)
+        {
+            cout << "Pick either 1 or 2 only: " << endl;
+            cin >> roomChoice;  // Validate the room choice
+        }
+        if (roomChoice == 1)
+        {
+            total_room += single;  // Calculate the total cost for a single room
+        }
+        else
+        {
+            total_room += twin;  // Calculate the total cost for a twin room
+        }
+
+        // Generate the filename based on the user's ID
+        string fileName = "registration_report_" + userID + ".txt";
+        ofstream outFile(fileName.c_str(), ios::app);  // Open the file for appending
+        if (outFile.is_open())
+        {
+            // Write registration details to the file
+            outFile << "Registration ID: " << userID << endl;
+            outFile << "Room Type: " << roomChoice << endl;
+            outFile << "Cost: RM" << total_room << endl;
+            outFile << "----------------------" << endl;
+
+            cout << endl << "Registration details saved to " << fileName << endl;
+            outFile.close();  // Close the file
+            int choice;
+            cout << "Exit? \n1. Yes\n2. No" << endl << "Action: ";
+            cin >> choice;
+            if (choice == 1)
+            {
+                break;
+            }
+            else
+            {
+                userMenu();
+            }
+        }
+        else
+        {
+            cout << "Error opening the file." << endl;
+            userMenu();
+        }
+    }
+    case 2:
+    {
+        
+    }
+    case 3:
+    {
+        // Generate the filename based on the user's ID
+        string fileName = "registration_report_" + userID + ".txt";
+        ifstream selectedFile(fileName.c_str());  // Open the file for reading
+        if (selectedFile.is_open())
+        {
+            string line;
+            while (getline(selectedFile, line))
+            {
+                cout << line << endl;  // Display the registration report
+            }
+            selectedFile.close();
+            int choice;
+            cout << "Exit? \n1. Yes\n2. No" << endl << "Action: ";
+            cin >> choice;
+            if (choice == 1)
+            {
+                break;
+            }
+            else
+            {
+                userMenu();
+            }
+        }
+        else
+        {
+            cout << "File not found or error opening the file." << endl;
+            userMenu();
+        }
+        
+    }
+    case 4:
+    {
+        cout << "\t\t\t Logging out... \n\n";  // Display a logout message
+        break;
+    }
+    default:
+        cout << "Invalid choice. Please try again." << endl;
+        userMenu();
+    }
+}
+
+
     void AdminMenu(){
 
-        do{
-            cout << "\t\t\t ___________________         Menu        _______________________ \n\n\n";
+            cout << "\t\t\t ___________________         Admin Menu        _______________________ \n\n\n";
             cout << " ";
             cout << "\t| Press 1 to view room availability" << endl;
-            cout << "\t| Press 2 to book a room" << endl;
-            cout << "\t| Press 3 to view room prices" << endl;
-            cout << "\t| Press 4 to view sales report" << endl;
-            cout << "\t| Press 5 to log out" << endl;
+            cout << "\t| Press 2 to view amenities availability" << endl;
+            cout << "\t| Press 3 to view sales report" << endl;
+            cout << "\t| Press 4 to log out" << endl;
             cout << "\n\t\t\t Please enter your choice: ";
             cin >> choice;  // Read the user's choice from the input
             cout << endl;
@@ -177,34 +302,178 @@ int main(){
                     viewRooms();  // Call the viewRooms function to display room availability
                     break;
                 case 2:
-                    bookRoom();  // Call the bookRoom function to book a room
+                    viewAmenities();  // Call the viewAmenities function to display amenities availability
                     break;
                 case 3:
-                    viewPrices();  // Call the viewPrices function to display room prices
-                    break;
-                case 4:
                     salesReport();  // Call the salesReport function to display the sales report
                     break;
-                case 5:
+                case 4:
                     cout << "\t\t\t Logging out... \n\n";  // Display a logout message
-                    break;
+                    system("cls");
+                    main();
                 default:
                     cout << "\t\t\t Invalid choice. Please select from the options given above \n" << endl;
+                    AdminMenu();  // Call the AdminMenu function recursively
             }
-        }while(choice != 5);
     }
 
     void viewRooms(){
         // Display the number of available single and twin rooms
+        int choice;
         cout << "\t\t\t _________________________________________________________________ \n\n\n";
         cout << "\t\t\t\t\t\t\t Room Availability \n\n\n";
         cout << "\t\t\t _________________________________________________________________ \n\n\n";
         cout << "\t\t\t\t\t\t Single Rooms: " << Qsingle << endl;
         cout << "\t\t\t\t\t\t Twin Rooms: " << Qtwin << endl;
+        cout << "\n\n";
+
+        cout << "Do you want to exit? \n1. Yes\n2. No" << endl << "Action: ";
+        cin >> choice;
+        if (choice == 1)
+        {
+            cout << "\t\t\t Logging out... \n\n";  // Display a logout message
+        }
+        else
+        {
+            system("cls");
+            AdminMenu();
+        }
+    }
+
+    void viewAmenities(){
+        //Display number of available amenities
+        cout << "\t\t\t _________________________________________________________________ \n\n\n";
+        cout << "\t\t\t\t\t\t\t Amenities Availability \n\n\n";
+        cout << "\t\t\t _________________________________________________________________ \n\n\n";
+        cout << "\t\t\t\t\t\t Towel: " << Qtowel - Stowel << endl;
+        cout << "\t\t\t\t\t\t Pillow: " << Qpillow - Spillow << endl;
+        cout << "\t\t\t\t\t\t Water: " << Qwater - Swater << endl;
+        cout << "\t\t\t\t\t\t Biscuit: " << Qbiscuit - Sbiscuit << endl;
         cout << "\n\n\n";
+
+        cout << "Do you want to exit? \n1. Yes\n2. No" << endl << "Action: ";
+        cin >> choice;
+        if (choice == 1)
+        {
+            cout << "\t\t\t Logging out... \n\n";  // Display a logout message
+        }
+        else
+        {
+            system("cls");
+            AdminMenu();
+        }
     }
 
     void bookRoom(){
+        // Prompt the user to select a room type and quantity
+        cout << "\t\t\t _________________________________________________________________ \n\n\n";
+        cout << "\t\t\t\t\t\t\t Room Booking \n\n\n";
+        cout << "\t\t\t _________________________________________________________________ \n\n\n";
+        cout << "\t\t\t\t\t\t Room Type \t Price \t Quantity \n\n";
+        cout << "\t\t\t\t\t\t 1. Single \t RM65 \t " << Qsingle << endl;
+        cout << "\t\t\t\t\t\t 2. Twin \t RM100 \t " << Qtwin << endl;
+        cout << "\n\n\n";
+        cout << "\t\t\t Please enter your choice: ";
+        cin >> choice;
+        cout << "\t\t\t Please enter the quantity: ";
+        cin >> quant;
+
+        // Calculate the total price for the selected room type and quantity
+        switch (choice)
+        {
+            case 1:
+                if(Qsingle >= quant){
+                    Total_rooms = single * quant;
+                    Qsingle -= quant;
+                    Stwin += quant;
+                }
+                else{
+                    cout << "\t\t\t Insufficient quantity. Please try again. \n\n";
+                    bookRoom();  // Call the bookRoom function recursively
+                }
+                break;
+            case 2:
+                if(Qtwin >= quant){
+                    Total_rooms = twin * quant;
+                    Qtwin -= quant;
+                    Stwin += quant;
+                }
+                else{
+                    cout << "\t\t\t Insufficient quantity. Please try again. \n\n";
+                    bookRoom();  // Call the bookRoom function recursively
+                }
+                break;
+            default:
+                cout << "\t\t\t Invalid choice. Please try again. \n\n";
+                bookRoom();  // Call the bookRoom function recursively
+        }
+
+        // Display the total price for the selected room type and quantity
+        cout << "\t\t\t _________________________________________________________________ \n\n\n";
+        cout << "\t\t\t\t\t\t\t Room Booking \n\n\n";
+        cout << "\t\t\t _________________________________________________________________ \n\n\n";
+        cout << "\t\t\t\t\t\t Room Type \t Quantity \t Total Price \n\n";
+        switch (choice)
+        {
+            case 1:
+                cout << "\t\t\t\t\t\t Single \t " << quant << " \t\t RM" << Total_rooms << endl;
+                break;
+            case 2:
+                cout << "\t\t\t\t\t\t Twin \t\t " << quant << " \t\t RM" << Total_rooms << endl;
+                break;
+        }
+        cout << "\n\n\n";
+    }
+
+    void viewPrices(){
+        // Display the prices for each item
+        cout << "\t\t\t _________________________________________________________________ \n\n\n";
+        cout << "\t\t\t\t\t\t\t Room Prices \n\n\n";
+        cout << "\t\t\t _________________________________________________________________ \n\n\n";
+        cout << "\t\t\t\t\t\t Room Type \t Price \n\n";
+        cout << "\t\t\t\t\t\t Single \t RM65 \n";
+        cout << "\t\t\t\t\t\t Twin \t\t RM100 \n";
+        cout << "\n\n\n";
+    }
+
+    void salesReport(){
+        // Calculate the total sales for each item
+        Total_towel = Stowel * 0;
+        Total_water = Swater * 2;
+        Total_biscuit = Sbiscuit * 6;
+        Total_pillow = Spillow * 0;
+
+        // Calculate the total sales for all items
+        int total_sales = Total_rooms + Total_towel + Total_water + Total_biscuit + Total_pillow;
+
+        // Display the sales report
+        cout << "\t\t\t _________________________________________________________________ \n\n\n";
+        cout << "\t\t\t\t\t\t\t Sales Report \n\n\n";
+        cout << "\t\t\t _________________________________________________________________ \n\n\n";
+        cout << "\t\t\t\t\t\t Item \t\t Quantity \t Total Sales \n\n";
+        cout << "\t\t\t\t\t\t Single Rooms \t " << Ssingle << " \t\t RM" << Total_rooms << endl;
+        cout << "\t\t\t\t\t\t Twin Rooms \t " << Stwin << " \t\t RM" << Total_rooms << endl;
+        cout << "\t\t\t\t\t\t Towels \t " << Stowel << " \t\t RM" << Total_towel << endl;
+        cout << "\t\t\t\t\t\t Drinks \t " << Swater << " \t\t RM" << Total_water << endl;
+        cout << "\t\t\t\t\t\t Snacks \t " << Sbiscuit << " \t\t RM" << Total_biscuit << endl;
+        cout << "\t\t\t\t\t\t Pillows \t " << Spillow << " \t\t RM" << Total_pillow << endl;
+        cout << "\t\t\t\t\t\t Total Sales: RM" << total_sales << endl;
+        cout << "\n";
+
+        cout << "Do you want to exit? \n1. Yes\n2. No" << endl << "Action: ";
+        cin >> choice;
+        if (choice == 1)
+        {
+            cout << "\t\t\t Logging out... \n\n";  // Display a logout message
+        }
+        else
+        {
+            system("cls");
+            AdminMenu();
+        }
+    }
+
+/*void bookRoom(){
     // Prompt the user to select a room type
     cout << "\t\t\t _________________________________________________________________ \n\n\n";
     cout << "\t\t\t\t\t\t\t Room Booking \n\n\n";
@@ -260,41 +529,4 @@ int main(){
     }
     cout << "\n\n\n";
 }
-
-    void viewPrices(){
-        // Display the prices for each item
-        cout << "\t\t\t _________________________________________________________________ \n\n\n";
-        cout << "\t\t\t\t\t\t\t Room Prices \n\n\n";
-        cout << "\t\t\t _________________________________________________________________ \n\n\n";
-        cout << "\t\t\t\t\t\t Room Type \t Price \n\n";
-        cout << "\t\t\t\t\t\t Single \t $65 \n";
-        cout << "\t\t\t\t\t\t Twin \t\t $100 \n";
-        cout << "\n\n\n";
-    }
-
-    void salesReport(){
-        // Calculate the total sales for each item
-        Total_towel = Qtowel * 5;
-        Total_drinks = Qdrinks * 2;
-        Total_snacks = Qsnacks * 3;
-        Total_pillow = Qpillow * 10;
-
-        // Calculate the total sales for all items
-        int total_sales = Total_rooms + Total_towel + Total_drinks + Total_snacks + Total_pillow;
-
-        // Display the sales report
-        cout << "\t\t\t _________________________________________________________________ \n\n\n";
-        cout << "\t\t\t\t\t\t\t Sales Report \n\n\n";
-        cout << "\t\t\t _________________________________________________________________ \n\n\n";
-        cout << "\t\t\t\t\t\t Item \t\t Quantity \t Total Sales \n\n";
-        cout << "\t\t\t\t\t\t Single Rooms \t " << Ssingle << " \t\t $" << Total_rooms << endl;
-        cout << "\t\t\t\t\t\t Twin Rooms \t " << Stwin << " \t\t $" << Total_rooms << endl;
-        cout << "\t\t\t\t\t\t Towels \t\t " << Qtowel << " \t\t $" << Total_towel << endl;
-        cout << "\t\t\t\t\t\t Drinks \t\t " << Qdrinks << " \t\t $" << Total_drinks << endl;
-        cout << "\t\t\t\t\t\t Snacks \t\t " << Qsnacks << " \t\t $" << Total_snacks << endl;
-        cout << "\t\t\t\t\t\t Pillows \t " << Qpillow << " \t\t $" << Total_pillow << endl;
-        cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t Total Sales: $" << total_sales << endl;
-        cout << "\n\n\n";
-    }
-
-
+*/

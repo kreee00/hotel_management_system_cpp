@@ -216,7 +216,7 @@ void AdminMenu()
 
 // The 'mainMenu()' function is the main menu for registered users.
 
-void mainMenu()
+void userMenu()
 {
     int choice;
     cout << "Do you want to book a room?" << endl;
@@ -275,8 +275,8 @@ void mainMenu()
         else
         {
             cout << "Error opening the file." << endl;
+            userMenu();
         }
-        break;
     }
     case 2:
     {
