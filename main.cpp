@@ -5,14 +5,18 @@
 using namespace std;  // Use the standard namespace
 
 //Declare functions
+void resetCurrentRecord();
+void readCurrentRecord();
 void login();
 void registration();    
 void forgot();  
 void userMenu();
 void AdminMenu();
+void roomBooking();
+void amenitiesRequest();
+void checkBill();
 void viewRooms();
 void viewAmenities();
-void makeReservation();
 void viewPrices();
 void salesReport();
 
@@ -30,24 +34,83 @@ int Total_rooms = 0, Total_towel = 0, Total_water = 0, Total_biscuit = 0, Total_
 int count = 0;  // A variable to track login attempts
 string userID, password, id, pass;  // Strings to store user credentials
 
-int main()
+void readCurrentRecord()
 {
     ifstream file("current_record.txt");  // Open the file for reading
 
     if(!file.is_open()){
         // If the file does not exist, create it and initialize the quantities
         ofstream newFile("current_record.txt");
-        newFile << "20 40 75 100 100 75";
+        int quantities[] = {20, 40, 75, 100, 100, 75};
+        string items[] = {"Single Rooms", "Twin Rooms", "Towels", "Bottles of Water", "Biscuits", "Pillows"};
+        for(int i = 0; i < 6; i++){
+            newFile << quantities[i] << endl;
+        }
         newFile.close();
+        // Copy the quantities to the global variables
+        for(int i = 0; i < 6; i++){
+            switch(i){
+                case 0:
+                    Qsingle = quantities[i];
+                    break;
+                case 1:
+                    Qtwin = quantities[i];
+                    break;
+                case 2:
+                    Qtowel = quantities[i];
+                    break;
+                case 3:
+                    Qwater = quantities[i];
+                    break;
+                case 4:
+                    Qbiscuit = quantities[i];
+                    break;
+                case 5:
+                    Qpillow = quantities[i];
+                    break;
+            }
+            cout << items[i] << ": " << quantities[i] << endl;
+        }
     }
     else{
         // If the file exists, read the quantities from the file
-        file >> Qsingle >> Qtwin >> Qtowel >> Qwater >> Qbiscuit >> Qpillow;
+        int quantities[6];
+        string items[6] = {"Single Rooms", "Twin Rooms", "Towels", "Bottles of Water", "Biscuits", "Pillows"};
+        for(int i = 0; i < 6; i++){
+            file >> quantities[i];
+        }
         file.close();
+        // Copy the quantities to the global variables
+        for(int i = 0; i < 6; i++){
+            switch(i){
+                case 0:
+                    Qsingle = quantities[i];
+                    break;
+                case 1:
+                    Qtwin = quantities[i];
+                    break;
+                case 2:
+                    Qtowel = quantities[i];
+                    break;
+                case 3:
+                    Qwater = quantities[i];
+                    break;
+                case 4:
+                    Qbiscuit = quantities[i];
+                    break;
+                case 5:
+                    Qpillow = quantities[i];
+                    break;
+            }
+            cout << items[i] << ": " << quantities[i] << endl;
+        }
     }
+}
 
+int main()
+{
+    readCurrentRecord();  // Read the current record from the file
     int mainmenuchoice;
-    
     cout << "\t\t ___________________         One Night Hotel        _______________________ \n\n";
     cout << "\t| Press 1 to REGISTER " << endl;
     cout << "\t| Press 2 to LOGIN" << endl;
@@ -69,6 +132,7 @@ int main()
                 forgot();  // Call the password recovery function
                 break;
             case 4:
+                system("cls");
                 cout << "\t\t\t Thank you! \n\n";  // Display a farewell message
                 break;
             default:
@@ -76,7 +140,7 @@ int main()
                 main();  // Call the main function recursively
         }
         return 0;
-        }
+}
    
     void login()
     {
@@ -191,57 +255,315 @@ int main()
         system("cls");
         int choice;
         cout << "\n\n\t\t\t\t\t\t User Menu \n\n";
-        cout << "1. Make Reservation\n2. Logout" << endl;
+        cout << "1. Room Booking\n2. Amenities Request\n3. Check Bill\n4. Logout" << endl;
         cout << "Action: ";
         cin >> choice;
         switch (choice)
         {
             case 1:
-                makeReservation();
+                roomBooking();
                 break;
             case 2:
+                amenitiesRequest();
+                break;
+            case 3:
+                checkBill();
+                break;
+            case 4:
                 cout << "\t\t\t Logging out... \n\n";  // Display a logout message
+                system("cls");
                 main();
                 break;
             default:
                 cout << "Invalid choice. Please try again." << endl;
                 userMenu();
-                break;
+                
         }
+    }
+
+    void roomBooking()
+    {
+        system("cls");
+        cout << "\t\t\t ___________________         Room Booking        _______________________ \n\n\n";
+
+        // Read the current_record.txt file to check for room availability
+        ifstream current_record("current_record.txt");
+        bool single_available = false;
+        bool twin_available = false;
+        string firstline;
+        string secondline;
+        
+        // Read the first line (Single Rooms)
+        if (getline(current_record, firstline)){
+            int currentSingle = stoi(firstline);  // Extract the current stock count for Single Rooms
+            if(currentSingle > 0){
+                single_available = true;
+            }
+        }
+        // Read the second line (Twin Rooms)
+        if (getline(current_record, secondline)){
+            int currentTwin = stoi(secondline);  // Extract the current stock count for Twin Rooms
+            if(currentTwin > 0){
+                twin_available = true;
+            }
+        }
+
+
+        current_record.close();
+
+        // If no rooms are available, display an error message and return to the user menu
+        if (!single_available && !twin_available)
+        {
+            cout << "\n\n\t\t\t\t\t\t No rooms available. \n\n";
+            return;
+        }
+
+        // Prompt the user to select a room type
+        int room_choice;
+        cout << "Select a room type: \n";
+        if (single_available)
+        {
+            cout << "1. Single Room (RM65)\n";
+        }
+        if (twin_available)
+        {
+            cout << "2. Twin Room (RM100)\n";
+        }
+        cout << "Action: ";
+        cin >> room_choice;
+
+        // Update the current_record.txt file to reflect the booking
+        ofstream current_record_file("current_record.txt", ios::app);
+        if (room_choice == 1 && single_available)
+        {
+            Total_rooms += 65;
+            Ssingle++;
+            Qsingle--;
+        }
+        else if (room_choice == 2 && twin_available)
+        {
+            Total_rooms += 100;
+            Stwin++;
+            Qsingle--;
+        }
+        else
+        {
+            cout << "\n\n\t\t\t\t\t\t Invalid choice. \n\n";
+            return;
+        }
+        current_record_file << Qsingle << endl;
+        current_record_file << Qtwin << endl;
+        current_record_file << Qtowel << endl;
+        current_record_file << Qwater << endl;
+        current_record_file << Qbiscuit << endl;
+        current_record_file << Qpillow << endl;
+        current_record_file.close();
+
+        // Create a new file named [userID]_bill_report.txt to store the user's bill
+        string bill_file_name = userID + "_bill_report.txt";
+        ofstream bill_file(bill_file_name);
+
+        // Add the room booking to the bill report file
+        bill_file << "Room Booking:\n";
+        if (room_choice == 1)
+        {
+            bill_file << "Single Room: RM65\n";
+        }
+        else if (room_choice == 2)
+        {
+            bill_file << "Twin Room: RM100\n";
+        }
+        bill_file << "\n";
+
+        // Display a success message and return to the user menu
+        cout << "\n\n\t\t\t\t\t\t Room booked successfully. \n\n";
+
+        userMenu();
+    }
+
+    void amenitiesRequest()
+    {
+        system("cls");
+        cout << "\t\t\t ___________________         Amenities Request        _______________________ \n\n\n";
+
+        // Check if the user has booked a room by looking for their bill report file
+        string bill_file_name = userID + "_bill_report.txt";
+        ifstream bill_file(bill_file_name);
+        if (!bill_file)
+        {
+            cout << "\n\n\t\t\t\t\t\t You must book a room before making an amenities request. \n\n";
+            userMenu();
+            return;
+        }
+        bill_file.close();
+
+        // Prompt the user to select an amenity
+        int amenity_choice;
+        cout << "Select an amenity: \n";
+        cout << "1. Towel (RM0)\n";
+        cout << "2. Water (RM2)\n";
+        cout << "3. Biscuit (RM6)\n";
+        cout << "4. Pillow (RM0)\n";
+        cout << "Action: ";
+        cin >> amenity_choice;
+
+        // Add the amenity to the bill report file
+        ofstream bill_file_out(bill_file_name, ios::app);
+        if (amenity_choice == 1)
+        {
+            bill_file_out << "Towel: RM0\n";
+            Total_towel += 0;
+            Stowel++;
+            Qtowel--;
+        }
+        else if (amenity_choice == 2)
+        {
+            bill_file_out << "Water: RM2\n";
+            Total_water += 2;
+            Swater++;
+            Qwater--;
+        }
+        else if (amenity_choice == 3)
+        {
+            bill_file_out << "Biscuit: RM6\n";
+            Total_biscuit += 6;
+            Sbiscuit++;
+            Qbiscuit--;
+        }
+        else if (amenity_choice == 4)
+        {
+            bill_file_out << "Pillow: RM0\n";
+            Total_pillow += 0;
+            Spillow++;
+            Qbiscuit--;
+        }
+        else
+        {
+            cout << "\n\n\t\t\t\t\t\t Invalid choice. \n\n";
+            return;
+        }
+        bill_file_out << "\n";
+
+        // Update stocks in current_record.txt
+        ofstream current_record_file("current_record.txt", ios::app);
+        current_record_file << Qsingle << endl;
+        current_record_file << Qtwin << endl;
+        current_record_file << Qtowel << endl;
+        current_record_file << Qwater << endl;
+        current_record_file << Qbiscuit << endl;
+        current_record_file << Qpillow << endl;
+        current_record_file.close();
+
+        // Display a success message and return to the user menu
+        cout << "\n\n\t\t\t\t\t\t Amenities request made successfully. \n\n";
+
+        userMenu();
+    }
+
+    void checkBill()
+    {
+        system("cls");
+        cout << "\t\t\t ___________________         "<< userID <<"'s Bill        _______________________ \n\n\n";
+
+        // Check if the user has a bill report file
+        string bill_file_name = userID + "_bill_report.txt";
+        ifstream bill_file(bill_file_name);
+        if (!bill_file)
+        {
+            cout << "\n\n\t\t\t\t\t\t You have no bill to check. \n\n";
+            return;
+        }
+
+        // Read the contents of the file and display them to the console
+        string line;
+        while (getline(bill_file, line))
+        {
+            cout << line << endl;
+        }
+        bill_file.close();
+
+        // Display the total price for each item
+        cout << "\n\t\t\t\t\t\t Total Price \n\n";
+        cout << "\t\t\t\t\t\t Room: RM" << Total_rooms << endl;
+        cout << "\t\t\t\t\t\t Towel: RM" << Total_towel << endl;
+        cout << "\t\t\t\t\t\t Water: RM" << Total_water << endl;
+        cout << "\t\t\t\t\t\t Biscuit: RM" << Total_biscuit << endl;
+        cout << "\t\t\t\t\t\t Pillow: RM" << Total_pillow << endl;
+        cout << "\n\t\t\t\t\t\t Grand Total: RM" << Total_rooms + Total_towel + Total_water + Total_biscuit + Total_pillow << endl;
+        cout << "\n";
+
+        // Prompt user whether they want go to user menu or exit programme
+        int choice;
+        cout << "Do you want to exit? \n1. Yes\n2. No" << endl << "Action: ";
+        cin >> choice;
+        if (choice == 1)
+        {
+            cout << "\t\t\t Logging out... \n\n";  // Display a logout message
+        }
+        else
+        {
+            system("cls");
+            userMenu();
+        }
+    }
+
+    void resetCurrentRecord()
+    {
+        system("cls");
+        cout << "\t\t\t ___________________         Reset Current Record        _______________________ \n\n\n";
+        cout << "Enter the date of reset (DD/MM/YYYY): ";
+        string date;
+        cin >> date;
+
+        // Rename the current_record.txt file to [Date]_record.txt
+        string old_file_name = "current_record.txt";
+        string new_file_name = date + "_record.txt";
+        if (rename(old_file_name.c_str(), new_file_name.c_str()) != 0)
+        {
+            cout << "Error: Unable to rename file" << endl;
+            return;
+        }
+
+        // Call the readCurrentRecord function to create a new current_record.txt file
+        readCurrentRecord();
     }
 
     void AdminMenu()
     {
         system("cls");
-            cout << "\t\t\t ___________________         Admin Menu        _______________________ \n\n\n";
-            cout << " ";
-            cout << "\t| Press 1 to view room availability" << endl;
-            cout << "\t| Press 2 to view amenities availability" << endl;
-            cout << "\t| Press 3 to view sales report" << endl;
-            cout << "\t| Press 4 to log out" << endl;
-            cout << "\n\t\t\t Please enter your choice: ";
-            cin >> choice;  // Read the user's choice from the input
-            cout << endl;
+        cout << "\t\t\t ___________________         Admin Menu        _______________________ \n\n\n";
+        cout << " ";
+        cout << "\t| Press 1 to view room availability" << endl;
+        cout << "\t| Press 2 to view amenities availability" << endl;
+        cout << "\t| Press 3 to view sales report" << endl;
+        cout << "\t| Press 4 to reset current record" << endl;
+        cout << "\t| Press 5 to log out" << endl;
+        cout << "\n\t\t\t Please enter your choice: ";
+        cin >> choice;  // Read the user's choice from the input
+        cout << endl;
 
-            switch (choice)
-            {
-                case 1:
-                    viewRooms();  // Call the viewRooms function to display room availability
-                    break;
-                case 2:
-                    viewAmenities();  // Call the viewAmenities function to display amenities availability
-                    break;
-                case 3:
-                    salesReport();  // Call the salesReport function to display the sales report
-                    break;
-                case 4:
-                    cout << "\t\t\t Logging out... \n\n";  // Display a logout message
-                    system("cls");
-                    main();
-                default:
-                    cout << "\t\t\t Invalid choice. Please select from the options given above \n" << endl;
-                    AdminMenu();  // Call the AdminMenu function recursively
-            }
+        switch (choice)
+        {
+            case 1:
+                viewRooms();  // Call the viewRooms function to display room availability
+                break;
+            case 2:
+                viewAmenities();  // Call the viewAmenities function to display amenities availability
+                break;
+            case 3:
+                salesReport();  // Call the salesReport function to display the sales report
+                break;
+            case 4:
+                resetCurrentRecord();  // Call the resetCurrentRecord function to reset the current record
+                break;
+            case 5:
+                cout << "\t\t\t Logging out... \n\n";  // Display a logout message
+                system("cls");
+                main();
+            default:
+                cout << "\t\t\t Invalid choice. Please select from the options given above \n" << endl;
+                AdminMenu();  // Call the AdminMenu function recursively
+        }
     }
 
     void viewRooms()
@@ -339,74 +661,153 @@ int main()
         }
     }
 
-    void makeReservation()
+    /*void makeReservation()
     {
-        system("cls");
+        // Read the current record from the file
+        ifstream inFile("current_record.txt");
+        if (!inFile.is_open())
+        {
+            cout << "Error opening the file." << endl;
+            return;
+        }
+
+        string line;
+        getline(inFile, line);  // Read the first line (Single Rooms)
+        int currentSingle = stoi(line.substr(line.find(":") + 1));  // Extract the current stock count for Single Rooms
+
+        getline(inFile, line);  // Read the second line (Twin Rooms)
+        int currentTwin = stoi(line.substr(line.find(":") + 1));  // Extract the current stock count for Twin Rooms
+
+        getline(inFile, line);  // Read the third line (Towels)
+        int currentTowel = stoi(line.substr(line.find(":") + 1));  // Extract the current stock count for Towels
+
+        getline(inFile, line);  // Read the fourth line (Water)
+        int currentWater = stoi(line.substr(line.find(":") + 1));  // Extract the current stock count for Water
+
+        getline(inFile, line);  // Read the fifth line (Biscuits)
+        int currentBiscuit = stoi(line.substr(line.find(":") + 1));  // Extract the current stock count for Biscuits
+
+        getline(inFile, line);  // Read the sixth line (Pillows)
+        int currentPillow = stoi(line.substr(line.find(":") + 1));  // Extract the current stock count for Pillows
+
+        inFile.close();  // Close the file
+
+        // Prompt the user to select a room type
         cout << "\nWhat room do you want?" << endl;
         cout << "1. Single = RM65 \n2. Twin = RM100" << endl;
         int roomChoice;
         cout << "Room choice: ";
-        cin >> roomChoice;  // Read the user's room choice
+        cin >> roomChoice;
+
+        // Validate the user's input
         while (roomChoice != 1 && roomChoice != 2)
         {
             cout << "Pick either 1 or 2 only: " << endl;
-            cin >> roomChoice;  // Validate the room choice
+            cin >> roomChoice;
         }
+
+        // Update the stock count for the selected room type
         if (roomChoice == 1)
         {
-            total_room += single;  // Calculate the total cost for a single room
+            currentSingle--;
         }
         else
         {
-            total_room += twin;  // Calculate the total cost for a twin room
+            currentTwin--;
         }
 
-        // Prompt the user to enter the number of amenities they want
-        cout << "\nHow many towels do you want? (RM5 each): ";
-        cin >> quant;
-        Stowel += quant;  // Update the number of towels sold
-        Total_towel = Stowel * 5;  // Calculate the total cost of towels
+        // Prompt the user to select extra amenities
+        cout << "\nDo you want to add extra amenities?" << endl;
+        cout << "1. Towel (RM0) \n2. Water (RM2) \n3. Biscuit (RM6) \n4. Pillow (RM0)" << endl;
+        int amenityChoice;
+        cout << "Amenity choice: ";
+        cin >> amenityChoice;
 
-        cout << "How many bottles of water do you want? (RM2 each): ";
-        cin >> quant;
-        Swater += quant;  // Update the number of water bottles sold
-        Total_water = Swater * 2;  // Calculate the total cost of water bottles
+        // Validate the user's input
+        while (amenityChoice < 1 || amenityChoice > 4)
+        {
+            cout << "Invalid choice. Please select again: ";
+            cin >> amenityChoice;
+        }
 
-        cout << "How many packets of biscuits do you want? (RM3 each): ";
-        cin >> quant;
-        Sbiscuit += quant;  // Update the number of biscuits sold
-        Total_biscuit = Sbiscuit * 3;  // Calculate the total cost of biscuits
+        // Prompt the user for the quantity of the selected amenity
+        cout << "How many do you want? ";
+        int amenityQuantity;
+        cin >> amenityQuantity;
 
-        cout << "How many pillows do you want? (RM10 each): ";
-        cin >> quant;
-        Spillow += quant;  // Update the number of pillows sold
-        Total_pillow = Spillow * 10;  // Calculate the total cost of pillows
+        // Update the stock count for the selected amenity
+        switch (amenityChoice)
+        {
+            case 1:
+                currentTowel -= amenityQuantity;
+                Total_towel = amenityQuantity * Qtowel;
+                break;
+            case 2:
+                currentWater -= amenityQuantity;
+                Total_water = amenityQuantity * Qwater;
+                break;
+            case 3:
+                currentBiscuit -= amenityQuantity;
+                Total_biscuit = amenityQuantity * Qbiscuit;
+                break;
+            case 4:
+                currentPillow -= amenityQuantity;
+                Total_pillow = amenityQuantity * Qpillow;
+                break;
+        }
+
+        // Write the updated record back to the file
+        ofstream outFile("current_record.txt");
+        if (!outFile.is_open())
+        {
+            cout << "Error opening the file." << endl;
+            return;
+        }
+
+        outFile << "Single Rooms:" << currentSingle << endl;
+        outFile << "Twin Rooms:" << currentTwin << endl;
+        outFile << "Towels:" << currentTowel << endl;
+        outFile << "Water:" << currentWater << endl;
+        outFile << "Biscuits:" << currentBiscuit << endl;
+        outFile << "Pillows:" << currentPillow << endl;
+
+        outFile.close();  // Close the file
 
         // Calculate the total spending by user
         int totalSpending = total_room + Total_towel + Total_water + Total_biscuit + Total_pillow;
 
         // Generate the filename based on the user's ID
         string fileName = "bills_report_" + userID + ".txt";
-        ofstream outFile(fileName.c_str(), ios::app);  // Open the file for appending
-        if (outFile.is_open())
+        ofstream outFileUser(fileName.c_str(), ios::app);  // Open the file for appending
+        if (outFileUser.is_open())
         {
             // Write registration details to the file
-            outFile << "Registration ID: " << userID << endl;
-            outFile << "Room Type: " << roomChoice << endl;
-            outFile << "Cost: RM" << totalSpending << endl;
-            outFile << "----------------------" << endl;
+            outFileUser << "Registration ID: " << userID << endl;
+            outFileUser << "Room Type: " << roomChoice << endl;
+            outFileUser << "----------------------" << endl;
 
             // Write amenities details to the file
-            outFile << "Amenity Type: Towel (RM5) x " << Stowel << endl;
-            outFile << "Amenity Type: Water (RM2) x " << Swater << endl;
-            outFile << "Amenity Type: Biscuit (RM3) x " << Sbiscuit << endl;
-            outFile << "Amenity Type: Pillow (RM10) x " << Spillow << endl;
-            outFile << "----------------------" << endl;
+            switch (amenityChoice)
+            {
+                case 1:
+                    outFileUser << "Amenity Type: Towel (RM0) x " << amenityQuantity << endl;
+                    break;
+                case 2:
+                    outFileUser << "Amenity Type: Water (RM2) x " << amenityQuantity << endl;
+                    break;
+                case 3:
+                    outFileUser << "Amenity Type: Biscuit (RM6) x " << amenityQuantity << endl;
+                    break;
+                case 4:
+                    outFileUser << "Amenity Type: Pillow (RM0) x " << amenityQuantity << endl;
+                    break;
+            }
+            outFileUser << "----------------------" << endl;
 
             // Calculate the total spending by user
-            outFile << "Total Spending: RM" << totalSpending << endl;
+            outFileUser << "Total Spending: RM" << totalSpending << endl;
 
-            outFile.close();  // Close the file
+            outFileUser.close();  // Close the file
             int choice;
             cout << endl << "Registration and amenities details saved to " << fileName << endl;
             cout << "Exit? \n1. Yes\n2. No" << endl << "Action: ";
@@ -426,3 +827,4 @@ int main()
             userMenu();
         }
     }
+*/
