@@ -3,18 +3,18 @@
 Welcome to the One Night Hotel Management System! 🤗�
 
 ## Table of Contents 📚
-- [Project Overview](#project-overview)
-- [Team Members](#team-members)
-- [University Information](#university-information)
-- [Project Features](#project-features)
-   - [User Registration](#1-user-registration)
-   - [User Login](#2-user-login)
-   - [Forgot Password](#3-forgot-password)
-   - [Room Booking](#4-room-booking)
-   - [Amenities Request](#5-amenities-request)
-   - [Check Bill](#6-check-bill)
-   - [Admin Features](#7-admin-features)
-- [How to Run the Project](#how-to-run-the-project) 🚀
+- [Project Overview](#project-overview-)
+- [Team Members](#team-members-)
+- [University Information](#university-information-)
+- [Project Features](#project-features-)
+   - [User Registration](#1-user-registration-)
+   - [User Login](#2-user-login-)
+   - [Forgot Password](#3-forgot-password-)
+   - [Room Booking](#4-room-booking-)
+   - [Amenities Request](#5-amenities-request-)
+   - [Check Bill](#6-check-bill-)
+   - [Admin Features](#7-admin-features-)
+- [How to Run the Project](#how-to-run-the-project-) 🚀
 
 ## Project Overview 🌟
 
