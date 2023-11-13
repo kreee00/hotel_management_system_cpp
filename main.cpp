@@ -333,7 +333,7 @@ int main()
         cin >> room_choice;
 
         // Update the current_record.txt file to reflect the booking
-        ofstream current_record_file("current_record.txt", ios::app);
+        ofstream current_record_file("current_record.txt", ios::trunc);
         if (room_choice == 1 && single_available)
         {
             Total_rooms += 65;
@@ -445,7 +445,7 @@ int main()
         bill_file_out << "\n";
 
         // Update stocks in current_record.txt
-        ofstream current_record_file("current_record.txt", ios::app);
+        ofstream current_record_file("current_record.txt", ios::trunc);
         current_record_file << Qsingle << endl;
         current_record_file << Qtwin << endl;
         current_record_file << Qtowel << endl;
@@ -660,171 +660,3 @@ int main()
             AdminMenu();
         }
     }
-
-    /*void makeReservation()
-    {
-        // Read the current record from the file
-        ifstream inFile("current_record.txt");
-        if (!inFile.is_open())
-        {
-            cout << "Error opening the file." << endl;
-            return;
-        }
-
-        string line;
-        getline(inFile, line);  // Read the first line (Single Rooms)
-        int currentSingle = stoi(line.substr(line.find(":") + 1));  // Extract the current stock count for Single Rooms
-
-        getline(inFile, line);  // Read the second line (Twin Rooms)
-        int currentTwin = stoi(line.substr(line.find(":") + 1));  // Extract the current stock count for Twin Rooms
-
-        getline(inFile, line);  // Read the third line (Towels)
-        int currentTowel = stoi(line.substr(line.find(":") + 1));  // Extract the current stock count for Towels
-
-        getline(inFile, line);  // Read the fourth line (Water)
-        int currentWater = stoi(line.substr(line.find(":") + 1));  // Extract the current stock count for Water
-
-        getline(inFile, line);  // Read the fifth line (Biscuits)
-        int currentBiscuit = stoi(line.substr(line.find(":") + 1));  // Extract the current stock count for Biscuits
-
-        getline(inFile, line);  // Read the sixth line (Pillows)
-        int currentPillow = stoi(line.substr(line.find(":") + 1));  // Extract the current stock count for Pillows
-
-        inFile.close();  // Close the file
-
-        // Prompt the user to select a room type
-        cout << "\nWhat room do you want?" << endl;
-        cout << "1. Single = RM65 \n2. Twin = RM100" << endl;
-        int roomChoice;
-        cout << "Room choice: ";
-        cin >> roomChoice;
-
-        // Validate the user's input
-        while (roomChoice != 1 && roomChoice != 2)
-        {
-            cout << "Pick either 1 or 2 only: " << endl;
-            cin >> roomChoice;
-        }
-
-        // Update the stock count for the selected room type
-        if (roomChoice == 1)
-        {
-            currentSingle--;
-        }
-        else
-        {
-            currentTwin--;
-        }
-
-        // Prompt the user to select extra amenities
-        cout << "\nDo you want to add extra amenities?" << endl;
-        cout << "1. Towel (RM0) \n2. Water (RM2) \n3. Biscuit (RM6) \n4. Pillow (RM0)" << endl;
-        int amenityChoice;
-        cout << "Amenity choice: ";
-        cin >> amenityChoice;
-
-        // Validate the user's input
-        while (amenityChoice < 1 || amenityChoice > 4)
-        {
-            cout << "Invalid choice. Please select again: ";
-            cin >> amenityChoice;
-        }
-
-        // Prompt the user for the quantity of the selected amenity
-        cout << "How many do you want? ";
-        int amenityQuantity;
-        cin >> amenityQuantity;
-
-        // Update the stock count for the selected amenity
-        switch (amenityChoice)
-        {
-            case 1:
-                currentTowel -= amenityQuantity;
-                Total_towel = amenityQuantity * Qtowel;
-                break;
-            case 2:
-                currentWater -= amenityQuantity;
-                Total_water = amenityQuantity * Qwater;
-                break;
-            case 3:
-                currentBiscuit -= amenityQuantity;
-                Total_biscuit = amenityQuantity * Qbiscuit;
-                break;
-            case 4:
-                currentPillow -= amenityQuantity;
-                Total_pillow = amenityQuantity * Qpillow;
-                break;
-        }
-
-        // Write the updated record back to the file
-        ofstream outFile("current_record.txt");
-        if (!outFile.is_open())
-        {
-            cout << "Error opening the file." << endl;
-            return;
-        }
-
-        outFile << "Single Rooms:" << currentSingle << endl;
-        outFile << "Twin Rooms:" << currentTwin << endl;
-        outFile << "Towels:" << currentTowel << endl;
-        outFile << "Water:" << currentWater << endl;
-        outFile << "Biscuits:" << currentBiscuit << endl;
-        outFile << "Pillows:" << currentPillow << endl;
-
-        outFile.close();  // Close the file
-
-        // Calculate the total spending by user
-        int totalSpending = total_room + Total_towel + Total_water + Total_biscuit + Total_pillow;
-
-        // Generate the filename based on the user's ID
-        string fileName = "bills_report_" + userID + ".txt";
-        ofstream outFileUser(fileName.c_str(), ios::app);  // Open the file for appending
-        if (outFileUser.is_open())
-        {
-            // Write registration details to the file
-            outFileUser << "Registration ID: " << userID << endl;
-            outFileUser << "Room Type: " << roomChoice << endl;
-            outFileUser << "----------------------" << endl;
-
-            // Write amenities details to the file
-            switch (amenityChoice)
-            {
-                case 1:
-                    outFileUser << "Amenity Type: Towel (RM0) x " << amenityQuantity << endl;
-                    break;
-                case 2:
-                    outFileUser << "Amenity Type: Water (RM2) x " << amenityQuantity << endl;
-                    break;
-                case 3:
-                    outFileUser << "Amenity Type: Biscuit (RM6) x " << amenityQuantity << endl;
-                    break;
-                case 4:
-                    outFileUser << "Amenity Type: Pillow (RM0) x " << amenityQuantity << endl;
-                    break;
-            }
-            outFileUser << "----------------------" << endl;
-
-            // Calculate the total spending by user
-            outFileUser << "Total Spending: RM" << totalSpending << endl;
-
-            outFileUser.close();  // Close the file
-            int choice;
-            cout << endl << "Registration and amenities details saved to " << fileName << endl;
-            cout << "Exit? \n1. Yes\n2. No" << endl << "Action: ";
-            cin >> choice;
-            if (choice == 1)
-            {
-                exit(0);
-            }
-            else
-            {
-                userMenu();
-            }
-        }
-        else
-        {
-            cout << "Error opening the file." << endl;
-            userMenu();
-        }
-    }
-*/
