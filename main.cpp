@@ -50,7 +50,7 @@ int main()
 
     int mainmenuchoice;
     
-    cout << "\t\t ___________________         One Night Hotel        _______________________ \n/n";
+    cout << "\t\t ___________________         One Night Hotel        _______________________ \n\n";
     cout << "\t| Press 1 to REGISTER " << endl;
     cout << "\t| Press 2 to LOGIN" << endl;
     cout << "\t| Press 3 if you forgot your password" << endl;
