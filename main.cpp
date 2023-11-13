@@ -191,7 +191,7 @@ int main()
         system("cls");
         int choice;
         cout << "\n\n\t\t\t\t\t\t User Menu \n\n";
-        cout << "1. Make Reservation\n2. Request Amenities\n3. Logout" << endl;
+        cout << "1. Make Reservation\n2. Logout" << endl;
         cout << "Action: ";
         cin >> choice;
         switch (choice)
@@ -200,9 +200,6 @@ int main()
                 makeReservation();
                 break;
             case 2:
-                makeReservation();
-                break;
-            case 3:
                 cout << "\t\t\t Logging out... \n\n";  // Display a logout message
                 main();
                 break;
