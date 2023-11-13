@@ -1,51 +1,76 @@
-# One Night Hotel
+# One Night Hotel Management System
 
-The One Night Stand Hotel is a C++ application that allows users to register, login, and book rooms in a hotel. It also provides functionality for administrators to review available rooms, amenities, and revenue of the day. This system is designed as an educational project.
+Welcome to the One Night Hotel Management System! 🏨🌙
+
+## Project Overview
+
+This comprehensive hotel management system for the "One Night Hotel" is a user-friendly platform that seamlessly integrates all aspects of hotel operations. From user registration to room booking, amenities requests, bill checking, and administrative functionalities, this system streamlines the hotel's processes for both guests and staff.
 
 ## Team Members
 
-- Mohamad Akram bin Mohd Faisal (Matric ID: 22006626)
-- Arleen April Chong (Matric ID: 22006582)
+- **Mohamad Akram bin Mohd Faisal**
+  - Matric ID: 22006626
+  - GitHub: [Akram Faisal](https://github.com/kreee00)
 
-## Features
+- **Arleen April Chong**
+  - Matric ID: 22006582
+  - GitHub: [Arleen](https://github.com/barzj04)
 
-- User Registration: Users can create an account by providing a username and password. Their credentials are stored in a file named "records.txt."
+## University Information
 
-- User Login: Registered users can log in using their username and password. Successful login grants access to the main menu.
+- **University:** Universiti Teknologi PETRONAS
+- **Program:** Bachelor's in Computer Science (Hons)
+- **Year/Semester:** 1st Year, 1st Semester
+- **Course:** TEB1013 - Structured Programming
+- **Instructor:** Dr. Fadhli
 
-- Password Recovery: Users who forget their password can recover it by providing their remembered username.
+## Project Features
 
-- Admin Features: The application includes admin functionalities to review available rooms, amenities, and daily revenue.
+### 1. User Registration
 
-- Room Booking: Registered users can book rooms with options for single and twin rooms.
+New users can seamlessly register by providing a unique User ID and Password.
 
-- Registration Report: Users can view their registration report, including room choice and cost.
+### 2. User Login
 
-## Usage
+Registered users can effortlessly log in using their User ID and Password.
 
-1. Compile and run the application in a C++ development environment.
+### 3. Forgot Password
 
-2. Choose from the following options in the login menu:
-   - Register (Option 1)
-   - Login (Option 2)
-   - Forgot Password (Option 3)
-   - Exit (Option 4)
+Users can recover their password with ease by entering their User ID.
 
-3. If you choose to register, provide a username and password to create an account.
+### 4. Room Booking
 
-4. If you choose to log in, enter your username and password. Administrators can log in with the username "admin" and password "admin."
+The system facilitates a smooth room booking process for single or twin rooms, updating room availability in real-time.
 
-5. Follow the on-screen instructions to navigate the system.
+### 5. Amenities Request
 
-## Files
+After room booking, users can effortlessly request additional amenities like towels, water, biscuits, and pillows.
 
-- `main.cpp`: The main C++ source code file for the project.
-- `records.txt`: A text file used to store user credentials (usernames and passwords).
+### 6. Check Bill
 
-## Note
+Users can conveniently review their bills, including room charges and selected amenities.
 
-This project is intended for educational purposes and may require additional development and error handling to be used in real-world applications.
+### 7. Admin Features
 
-## License
+- **View Availability:** Monitor room and amenities availability at a glance.
+- **Sales Reports:** Generate comprehensive sales reports for insightful analysis.
+- **Reset Record:** Reset the current record effortlessly for a fresh start.
 
-This project is open-source and available under the MIT License. See the [LICENSE](LICENSE) file for details.
+## How to Run the Project
+
+1. Clone the repository to your local machine.
+   ```bash
+   git clone https://github.com/kreee00/hotel_management_system_cpp
+   ```
+
+2. Compile and run the main program.
+   ```bash
+   g++ main.cpp -o hotel_management_system
+   ./hotel_management_system
+   ```
+
+3. Follow the intuitive on-screen instructions to navigate through the system.
+
+---
+
+Dive into the project, explore its potential, and contribute to its success! Should you have any inquiries or encounter issues, feel free to reach out to our dedicated team members. Happy coding! 👩‍💻👨‍💻
