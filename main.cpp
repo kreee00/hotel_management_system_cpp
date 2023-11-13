@@ -32,8 +32,6 @@ string userID, password, id, pass;  // Strings to store user credentials
 
 int main()
 {
-    system("cls");
-
     ifstream file("current_record.txt");  // Open the file for reading
 
     if(!file.is_open()){
@@ -112,7 +110,8 @@ int main()
     }
     else
     {
-        cout << "\n LOGIN ERROR \n Please check your username and password \n";
+        system("cls");
+        cout << "\n LOGIN ERROR \n Please check your username and password \n\n";
         main();  // Return to the main menu if login fails
     }
     }
