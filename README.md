@@ -33,8 +33,8 @@ This comprehensive hotel management system for the "One Night Hotel" is a user-f
 ## University Information 🎓
 
 - **University:** Universiti Teknologi PETRONAS
-- **Program:** Bachelor's in Computer Science (Hons)
-- **Year/Semester:** 1st Year, 1st Semester
+- **Program:** Bachelor of Computer Science (Hons)
+- **Year/Semester:** 1st Year, 1st Semester (September 2023)
 - **Course:** TEB1013 - Structured Programming
 - **Instructor:** Dr. Fadli Saad 🧑‍🏫
 
