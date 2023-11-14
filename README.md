@@ -15,6 +15,10 @@ Welcome to the One Night Hotel Management System! 🤗�
    - [Check Bill](#6-check-bill-)
    - [Admin Features](#7-admin-features-)
 - [How to Run the Project](#how-to-run-the-project-) 🚀
+   - [Prerequisites](#1-prerequisites-)
+   - [Clone the Repository](#2-clone-the-repository-)
+   - [Compile and Run the Program](#3-compile-and-run-the-program-)
+   - [Explore the System](#4-explore-the-system-)
 
 ## Project Overview 🌟
 
@@ -72,18 +76,39 @@ Users can conveniently review their bills, including room charges and selected a
 
 ## How to Run the Project 🚀
 
-1. Clone the repository to your local machine. 🖥️
+Follow these step-by-step instructions to clone and run the Hotel Management System C++ project on your local machine:
+
+### Prerequisites
+- Ensure that you have [Git](https://git-scm.com/) and [g++](https://gcc.gnu.org/) installed on your machine.
+
+### Clone the Repository
+1. Open your terminal or command prompt.
+2. Navigate to the directory where you want to clone the project.
+3. Run the following command to clone the repository:
     ```bash
     git clone https://github.com/kreee00/hotel_management_system_cpp
     ```
 
-2. Compile and run the main program. 🏃‍♂️
+### Compile and Run the Program
+4. Change into the project directory:
+    ```bash
+    cd hotel_management_system_cpp
+    ```
+
+5. Compile the main program using g++:
     ```bash
     g++ main.cpp -o hotel_management_system
+    ```
+
+6. Run the compiled program:
+    ```bash
     ./hotel_management_system
     ```
 
-3. Follow the intuitive on-screen instructions to navigate through the system. 🤓
+### Explore the System
+7. Follow the intuitive on-screen instructions to navigate through the system. 🤓
+
+That's it! You've successfully cloned, compiled, and run the Hotel Management System C++ project on your machine.
 
 ---
 
