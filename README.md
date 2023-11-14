@@ -15,10 +15,10 @@ Welcome to the One Night Hotel Management System! 🤗�
    - [Check Bill](#6-check-bill-)
    - [Admin Features](#7-admin-features-)
 - [How to Run the Project](#how-to-run-the-project-) 🚀
-   - [Prerequisites](#1-prerequisites-)
-   - [Clone the Repository](#2-clone-the-repository-)
-   - [Compile and Run the Program](#3-compile-and-run-the-program-)
-   - [Explore the System](#4-explore-the-system-)
+   - [Prerequisites](#8-prerequisites-)
+   - [Clone the Repository](#9-clone-the-repository-)
+   - [Compile and Run the Program](#10-compile-and-run-the-program-)
+   - [Explore the System](#11-explore-the-system-)
 
 ## Project Overview 🌟
 
