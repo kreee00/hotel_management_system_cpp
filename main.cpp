@@ -134,7 +134,7 @@ int main()
             case 4:
                 system("cls");
                 cout << "\t\t\t Thank you! \n\n";  // Display a farewell message
-                break;
+                exit(0);  // Terminate the programme
             default:
                 cout << "\t\t\t Invalid choice. Please select from the options given above \n" << endl;
                 main();  // Call the main function recursively
@@ -156,28 +156,41 @@ int main()
             cout << "\n\t\t\t Login admin successful! \n\n";
             AdminMenu();  // Call the admin menu function
         }
-        ifstream input("credentials.txt");  // Open the file for reading user records
-    while (input >> id >> pass)
-    {
-        if (id == userID && pass == password)
-        {
-            count = 1;  // Set the login attempt count to 1
-            system("cls");  // Clear the screen
-        }
-    }
-    input.close();  // Close the file
+        else {
+            ifstream input("credentials.txt");  // Open the file for reading user records
+            string line;
+            bool found = false;
+            while (getline(input, line)) {
+                string credentials[2];
+                int i = 0;
+                size_t pos = 0;
+                string token;
+                while ((pos = line.find(",")) != string::npos) {
+                    token = line.substr(0, pos);
+                    credentials[i] = token;
+                    line.erase(0, pos + 1);
+                    i++;
+                }
+                credentials[i] = line;
+                if (credentials[0] == userID && credentials[1] == password) {
+                    found = true;
+                    break;
+                }
+            }
+            input.close();  // Close the file
 
-    if (count == 1)
-    {
-        cout << userID << "\n Your LOGIN is successful \n Thanks for logging in! \n\n";
-        userMenu();  // Call the main menu function for regular users
-    }
-    else
-    {
-        system("cls");
-        cout << "\n LOGIN ERROR \n Please check your username and password \n\n";
-        main();  // Return to the main menu if login fails
-    }
+            if (found) {
+                count = 1;  // Set the login attempt count to 1
+                system("cls");  // Clear the screen
+                cout << userID << "\n Your LOGIN is successful \n Thanks for logging in! \n\n";
+                userMenu();  // Call the main menu function for regular users
+            }
+            else {
+                system("cls");
+                cout << "\n LOGIN ERROR \n Please check your username and password \n\n";
+                main();  // Return to the main menu if login fails
+            }
+        }
     }
 
     void registration()
@@ -192,7 +205,7 @@ int main()
         // Store the user's credentials in a file
         ofstream file;
         file.open("credentials.txt", ios::app);
-        file << id << " " << pass << endl;
+        file << id << "," << pass << endl;
         file.close();
 
         cout << "\n\t\t\t Registration successful! \n\n";
@@ -344,7 +357,7 @@ int main()
         {
             Total_rooms += 100;
             Stwin++;
-            Qsingle--;
+            Qtwin--;
         }
         else
         {
@@ -442,7 +455,6 @@ int main()
             cout << "\n\n\t\t\t\t\t\t Invalid choice. \n\n";
             return;
         }
-        bill_file_out << "\n";
 
         // Update stocks in current_record.txt
         ofstream current_record_file("current_record.txt", ios::trunc);
@@ -499,6 +511,7 @@ int main()
         if (choice == 1)
         {
             cout << "\t\t\t Logging out... \n\n";  // Display a logout message
+            main();
         }
         else
         {
@@ -511,7 +524,7 @@ int main()
     {
         system("cls");
         cout << "\t\t\t ___________________         Reset Current Record        _______________________ \n\n\n";
-        cout << "Enter the date of reset (DD/MM/YYYY): ";
+        cout << "Enter the date of reset (DD-MM-YYYY) separate with hyphen (-): ";
         string date;
         cin >> date;
 
@@ -521,8 +534,15 @@ int main()
         if (rename(old_file_name.c_str(), new_file_name.c_str()) != 0)
         {
             cout << "Error: Unable to rename file" << endl;
-            return;
+            resetCurrentRecord();
+        } else {
+            cout << "File renamed successfully" << endl;
+            AdminMenu();
+
         }
+
+        // Declare variables to keep track of items sold
+        int Ssingle = 0, Stwin = 0, Stowel = 0, Swater = 0, Sbiscuit = 0, Spillow = 0;
 
         // Call the readCurrentRecord function to create a new current_record.txt file
         readCurrentRecord();
@@ -627,11 +647,50 @@ int main()
     void salesReport()
     {
         system("cls");
+
+        // Declare variables to store the data from the file
+        int single_rooms_booked = 0, twin_rooms_booked = 0;
+        int towels_requested = 0, water_bottles_requested = 0, biscuits_requested = 0, pillows_requested = 0;
+
+        // Open the current_record.txt file for reading
+        ifstream infile("current_record.txt");
+
+        // Read each line of the file and extract the necessary information
+        string line;
+        while (getline(infile, line))
+        {
+            if (line.find("Single Rooms Booked:") != string::npos)
+            {
+                single_rooms_booked = stoi(line.substr(line.find(":") + 1));
+            }
+            else if (line.find("Twin Rooms Booked:") != string::npos)
+            {
+                twin_rooms_booked = stoi(line.substr(line.find(":") + 1));
+            }
+            else if (line.find("Towels Requested:") != string::npos)
+            {
+                towels_requested = stoi(line.substr(line.find(":") + 1));
+            }
+            else if (line.find("Water Bottles Requested:") != string::npos)
+            {
+                water_bottles_requested = stoi(line.substr(line.find(":") + 1));
+            }
+            else if (line.find("Biscuits Requested:") != string::npos)
+            {
+                biscuits_requested = stoi(line.substr(line.find(":") + 1));
+            }
+            else if (line.find("Pillows Requested:") != string::npos)
+            {
+                pillows_requested = stoi(line.substr(line.find(":") + 1));
+            }
+        }
+
         // Calculate the total sales for each item
-        Total_towel = Stowel * 0;
-        Total_water = Swater * 2;
-        Total_biscuit = Sbiscuit * 6;
-        Total_pillow = Spillow * 0;
+        int Total_rooms = (single_rooms_booked * 65) + (twin_rooms_booked * 100);
+        int Total_towel = towels_requested * 0;
+        int Total_water = water_bottles_requested * 2;
+        int Total_biscuit = biscuits_requested * 6;
+        int Total_pillow = pillows_requested * 0;
 
         // Calculate the total sales for all items
         int total_sales = Total_rooms + Total_towel + Total_water + Total_biscuit + Total_pillow;
@@ -639,14 +698,17 @@ int main()
         // Display the sales report
         cout << "\t\t\t ___________________         Sales Report        _______________________ \n";
         cout << "\t\t\t\t\t\t Item \t\t Quantity \t Total Sales \n\n";
-        cout << "\t\t\t\t\t\t Single Rooms \t " << Ssingle << " \t\t RM" << Total_rooms << endl;
-        cout << "\t\t\t\t\t\t Twin Rooms \t " << Stwin << " \t\t RM" << Total_rooms << endl;
-        cout << "\t\t\t\t\t\t Towels \t " << Stowel << " \t\t RM" << Total_towel << endl;
-        cout << "\t\t\t\t\t\t Drinks \t " << Swater << " \t\t RM" << Total_water << endl;
-        cout << "\t\t\t\t\t\t Snacks \t " << Sbiscuit << " \t\t RM" << Total_biscuit << endl;
-        cout << "\t\t\t\t\t\t Pillows \t " << Spillow << " \t\t RM" << Total_pillow << endl;
+        cout << "\t\t\t\t\t\t Single Rooms \t " << single_rooms_booked << " \t\t RM" << (single_rooms_booked * 65) << endl;
+        cout << "\t\t\t\t\t\t Twin Rooms \t " << twin_rooms_booked << " \t\t RM" << (twin_rooms_booked * 100) << endl;
+        cout << "\t\t\t\t\t\t Towels \t " << towels_requested << " \t\t RM" << Total_towel << endl;
+        cout << "\t\t\t\t\t\t Drinks \t " << water_bottles_requested << " \t\t RM" << Total_water << endl;
+        cout << "\t\t\t\t\t\t Snacks \t " << biscuits_requested << " \t\t RM" << Total_biscuit << endl;
+        cout << "\t\t\t\t\t\t Pillows \t " << pillows_requested << " \t\t RM" << Total_pillow << endl;
         cout << "\n\t\t\t\t\t\t Grand Total: \t\t\t RM" << total_sales << endl;
         cout << "\n";
+
+        // Close the current_record.txt file
+        infile.close();
 
         cout << "Do you want to exit? \n1. Yes\n2. No" << endl << "Action: ";
         cin >> choice;
