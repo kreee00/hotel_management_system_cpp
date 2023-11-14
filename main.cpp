@@ -52,24 +52,29 @@ void readCurrentRecord()
             switch(i){
                 case 0:
                     Qsingle = quantities[i];
+                    Ssingle = 0;
                     break;
                 case 1:
                     Qtwin = quantities[i];
+                    Stwin = 0;
                     break;
                 case 2:
                     Qtowel = quantities[i];
+                    Stowel = 0;
                     break;
                 case 3:
                     Qwater = quantities[i];
+                    Swater = 0;
                     break;
                 case 4:
                     Qbiscuit = quantities[i];
+                    Sbiscuit = 0;
                     break;
                 case 5:
                     Qpillow = quantities[i];
+                    Spillow = 0;
                     break;
             }
-            cout << items[i] << ": " << quantities[i] << endl;
         }
     }
     else{
@@ -85,24 +90,29 @@ void readCurrentRecord()
             switch(i){
                 case 0:
                     Qsingle = quantities[i];
+                    Ssingle = 20 - Qsingle;
                     break;
                 case 1:
                     Qtwin = quantities[i];
+                    Stwin = 40 - Qtwin;
                     break;
                 case 2:
                     Qtowel = quantities[i];
+                    Stowel = 75 - Qtowel;
                     break;
                 case 3:
                     Qwater = quantities[i];
+                    Swater = 100 - Qwater;
                     break;
                 case 4:
                     Qbiscuit = quantities[i];
+                    Sbiscuit = 100 - Qbiscuit;
                     break;
                 case 5:
                     Qpillow = quantities[i];
+                    Spillow = 75 - Qpillow;
                     break;
             }
-            cout << items[i] << ": " << quantities[i] << endl;
         }
     }
 }
@@ -666,25 +676,6 @@ int main()
     {
         system("cls");
 
-       int items[6];
-
-        ifstream fin("current_record.txt");
-        if (fin.is_open()) {
-            string line;
-            int i = 0;
-            while (getline(fin, line)) {
-                items[i] = stoi(line);
-                i++;
-            }
-        }
-        
-        Ssingle = Qsingle - items[0];
-        Stwin = Qtwin - items[1];
-        Stowel = Qtowel - items[2];
-        Swater = Qwater - items[3];
-        Sbiscuit = Qbiscuit - items[4];
-        Spillow = Qpillow - items[5];
-
         // Calculate the total sales for all items
         int Total_single = Ssingle * 65;
         int Total_twin = Stwin * 100;
@@ -705,7 +696,6 @@ int main()
         cout << "\t\t\t\t\t\t Pillows \t " << Spillow << " \t\t RM" << Total_pillow << endl;
         cout << "\n\t\t\t\t\t\t Grand Total: \t\t\t RM" << total_sales << endl;
         cout << "\n";
-        fin.close();
 
         cout << "Do you want to exit? \n1. Yes\n2. No" << endl << "Action: ";
         cin >> choice;
