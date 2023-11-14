@@ -15,10 +15,10 @@ Welcome to the One Night Hotel Management System! 🤗�
    - [Check Bill](#6-check-bill-)
    - [Admin Features](#7-admin-features-)
 - [How to Run the Project](#how-to-run-the-project-) 🚀
-   - [Prerequisites](#8-prerequisites-)
-   - [Clone the Repository](#9-clone-the-repository-)
-   - [Compile and Run the Program](#10-compile-and-run-the-program-)
-   - [Explore the System](#11-explore-the-system-)
+   - [Prerequisites](#prerequisites-)
+   - [Clone the Repository](#clone-the-repository-)
+   - [Compile and Run the Program](#compile-and-run-the-program-)
+   - [Explore the System](#explore-the-system-)
 
 ## Project Overview 🌟
 
@@ -40,7 +40,7 @@ This comprehensive hotel management system for the "One Night Hotel" is a user-f
 - **Program:** Bachelor's in Computer Science (Hons)
 - **Year/Semester:** 1st Year, 1st Semester
 - **Course:** TEB1013 - Structured Programming
-- **Instructor:** Dr. Fadhli 🧑‍🏫
+- **Instructor:** Dr. Fadli Saad 🧑‍🏫
 
 ## Project Features 🚀
 
