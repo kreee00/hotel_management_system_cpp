@@ -1,1 +1,15 @@
+Room Booking:
+Twin Room: RM100
+
 Biscuit: RM6
+
+Water: RM2
+
+Pillow: RM0
+
+Towel: RM0
+
+Biscuit: RM6
+
+Biscuit: RM6
+

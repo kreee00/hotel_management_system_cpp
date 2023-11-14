@@ -25,11 +25,11 @@ int single = 65, twin = 100;
 int Qsingle = 20, Qtwin = 40, Qtowel = 75, Qwater = 100, Qbiscuit = 100, Qpillow = 75;
 int quant, choice, total_room = 0;
 
-// Declare variables to keep track of items sold
-int Ssingle = 0, Stwin = 0, Stowel = 0, Swater = 0, Sbiscuit = 0, Spillow = 0;
-
 // Declare variables to track the total price for each item
-int Total_rooms = 0, Total_towel = 0, Total_water = 0, Total_biscuit = 0, Total_pillow = 0;
+int Total_rooms = 0, Total_single = 0, Total_twin = 0, Total_towel = 0, Total_water = 0, Total_biscuit = 0, Total_pillow = 0;
+
+// Declare variable to track sold items
+int Ssingle, Stwin, Stowel, Swater, Sbiscuit, Spillow;
 
 int count = 0;  // A variable to track login attempts
 string userID, password, id, pass;  // Strings to store user credentials
@@ -243,7 +243,7 @@ int main()
             temp.open("temp.txt");
             while(getline(file, line)){
                 if(line.find(userID) != string::npos){
-                    temp << userID << " " << password << endl;
+                    temp << userID << "," << password << endl;
                 }
                 else{
                     temp << line << endl;
@@ -266,6 +266,7 @@ int main()
     void userMenu()
     {
         system("cls");
+
         int choice;
         cout << "\n\n\t\t\t\t\t\t User Menu \n\n";
         cout << "1. Room Booking\n2. Amenities Request\n3. Check Bill\n4. Logout" << endl;
@@ -374,8 +375,7 @@ int main()
 
         // Create a new file named [userID]_bill_report.txt to store the user's bill
         string bill_file_name = userID + "_bill_report.txt";
-        ofstream bill_file(bill_file_name);
-
+        ofstream bill_file(bill_file_name, ios::app);
         // Add the room booking to the bill report file
         bill_file << "Room Booking:\n";
         if (room_choice == 1)
@@ -387,6 +387,7 @@ int main()
             bill_file << "Twin Room: RM100\n";
         }
         bill_file << "\n";
+        bill_file.close();
 
         // Display a success message and return to the user menu
         cout << "\n\n\t\t\t\t\t\t Room booked successfully. \n\n";
@@ -455,6 +456,8 @@ int main()
             cout << "\n\n\t\t\t\t\t\t Invalid choice. \n\n";
             return;
         }
+        bill_file_out << "\n";
+        bill_file_out.close();
 
         // Update stocks in current_record.txt
         ofstream current_record_file("current_record.txt", ios::trunc);
@@ -483,30 +486,45 @@ int main()
         if (!bill_file)
         {
             cout << "\n\n\t\t\t\t\t\t You have no bill to check. \n\n";
-            return;
+            // Prompt user whether they want go to user menu or exit programme
+            int choice;
+            cout << "Do you want to exit? \n1. Yes\n2. No" << endl << "Action: ";
+            cin >> choice;
+            if (choice == 1)
+            {
+                cout << "\t\t\t Logging out... \n\n";  // Display a logout message
+                main();
+            }
+            else
+            {
+                system("cls");
+                userMenu();
+            }
         }
 
-        // Read the contents of the file and display them to the console
+        // Read the contents of the file and extract the total amount spent
         string line;
+        int total_spending = 0;
         while (getline(bill_file, line))
         {
+            if (line.find("RM") != string::npos)
+            {
+                // Extract the total amount spent from the line
+                int pos = line.find("RM");
+                string amount_str = line.substr(pos + 2);
+                int amount = stoi(amount_str);
+                total_spending += amount;
+            }
             cout << line << endl;
         }
         bill_file.close();
 
-        // Display the total price for each item
-        cout << "\n\t\t\t\t\t\t Total Price \n\n";
-        cout << "\t\t\t\t\t\t Room: RM" << Total_rooms << endl;
-        cout << "\t\t\t\t\t\t Towel: RM" << Total_towel << endl;
-        cout << "\t\t\t\t\t\t Water: RM" << Total_water << endl;
-        cout << "\t\t\t\t\t\t Biscuit: RM" << Total_biscuit << endl;
-        cout << "\t\t\t\t\t\t Pillow: RM" << Total_pillow << endl;
-        cout << "\n\t\t\t\t\t\t Grand Total: RM" << Total_rooms + Total_towel + Total_water + Total_biscuit + Total_pillow << endl;
-        cout << "\n";
+        // Display the total amount spent to the console
+        cout << "\n\t\t\t\t\t\t Total Spending: RM" << total_spending << endl;
 
         // Prompt user whether they want go to user menu or exit programme
         int choice;
-        cout << "Do you want to exit? \n1. Yes\n2. No" << endl << "Action: ";
+        cout << "\nDo you want to exit? \n1. Yes\n2. No" << endl << "Action: ";
         cin >> choice;
         if (choice == 1)
         {
@@ -648,67 +666,46 @@ int main()
     {
         system("cls");
 
-        // Declare variables to store the data from the file
-        int single_rooms_booked = 0, twin_rooms_booked = 0;
-        int towels_requested = 0, water_bottles_requested = 0, biscuits_requested = 0, pillows_requested = 0;
+       int items[6];
 
-        // Open the current_record.txt file for reading
-        ifstream infile("current_record.txt");
-
-        // Read each line of the file and extract the necessary information
-        string line;
-        while (getline(infile, line))
-        {
-            if (line.find("Single Rooms Booked:") != string::npos)
-            {
-                single_rooms_booked = stoi(line.substr(line.find(":") + 1));
-            }
-            else if (line.find("Twin Rooms Booked:") != string::npos)
-            {
-                twin_rooms_booked = stoi(line.substr(line.find(":") + 1));
-            }
-            else if (line.find("Towels Requested:") != string::npos)
-            {
-                towels_requested = stoi(line.substr(line.find(":") + 1));
-            }
-            else if (line.find("Water Bottles Requested:") != string::npos)
-            {
-                water_bottles_requested = stoi(line.substr(line.find(":") + 1));
-            }
-            else if (line.find("Biscuits Requested:") != string::npos)
-            {
-                biscuits_requested = stoi(line.substr(line.find(":") + 1));
-            }
-            else if (line.find("Pillows Requested:") != string::npos)
-            {
-                pillows_requested = stoi(line.substr(line.find(":") + 1));
+        ifstream fin("current_record.txt");
+        if (fin.is_open()) {
+            string line;
+            int i = 0;
+            while (getline(fin, line)) {
+                items[i] = stoi(line);
+                i++;
             }
         }
-
-        // Calculate the total sales for each item
-        int Total_rooms = (single_rooms_booked * 65) + (twin_rooms_booked * 100);
-        int Total_towel = towels_requested * 0;
-        int Total_water = water_bottles_requested * 2;
-        int Total_biscuit = biscuits_requested * 6;
-        int Total_pillow = pillows_requested * 0;
+        
+        Ssingle = Qsingle - items[0];
+        Stwin = Qtwin - items[1];
+        Stowel = Qtowel - items[2];
+        Swater = Qwater - items[3];
+        Sbiscuit = Qbiscuit - items[4];
+        Spillow = Qpillow - items[5];
 
         // Calculate the total sales for all items
-        int total_sales = Total_rooms + Total_towel + Total_water + Total_biscuit + Total_pillow;
+        int Total_single = Ssingle * 65;
+        int Total_twin = Stwin * 100;
+        int Total_towel = Stowel * 0;
+        int Total_water = Swater * 2;
+        int Total_biscuit = Sbiscuit * 6;
+        int Total_pillow = Spillow * 0;
+        int total_sales = Total_single + Total_twin + Total_towel + Total_water + Total_biscuit + Total_pillow;
 
         // Display the sales report
         cout << "\t\t\t ___________________         Sales Report        _______________________ \n";
         cout << "\t\t\t\t\t\t Item \t\t Quantity \t Total Sales \n\n";
-        cout << "\t\t\t\t\t\t Single Rooms \t " << single_rooms_booked << " \t\t RM" << (single_rooms_booked * 65) << endl;
-        cout << "\t\t\t\t\t\t Twin Rooms \t " << twin_rooms_booked << " \t\t RM" << (twin_rooms_booked * 100) << endl;
-        cout << "\t\t\t\t\t\t Towels \t " << towels_requested << " \t\t RM" << Total_towel << endl;
-        cout << "\t\t\t\t\t\t Drinks \t " << water_bottles_requested << " \t\t RM" << Total_water << endl;
-        cout << "\t\t\t\t\t\t Snacks \t " << biscuits_requested << " \t\t RM" << Total_biscuit << endl;
-        cout << "\t\t\t\t\t\t Pillows \t " << pillows_requested << " \t\t RM" << Total_pillow << endl;
+        cout << "\t\t\t\t\t\t Single Rooms \t " << Ssingle << " \t\t RM" << Total_single << endl;
+        cout << "\t\t\t\t\t\t Twin Rooms \t " << Stwin << " \t\t RM" << Total_twin << endl;
+        cout << "\t\t\t\t\t\t Towels \t " << Stowel << " \t\t RM" << Total_towel << endl;
+        cout << "\t\t\t\t\t\t Drinks \t " << Swater << " \t\t RM" << Total_water << endl;
+        cout << "\t\t\t\t\t\t Snacks \t " << Sbiscuit << " \t\t RM" << Total_biscuit << endl;
+        cout << "\t\t\t\t\t\t Pillows \t " << Spillow << " \t\t RM" << Total_pillow << endl;
         cout << "\n\t\t\t\t\t\t Grand Total: \t\t\t RM" << total_sales << endl;
         cout << "\n";
-
-        // Close the current_record.txt file
-        infile.close();
+        fin.close();
 
         cout << "Do you want to exit? \n1. Yes\n2. No" << endl << "Action: ";
         cin >> choice;
