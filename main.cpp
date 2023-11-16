@@ -34,89 +34,6 @@ int Ssingle, Stwin, Stowel, Swater, Sbiscuit, Spillow;
 int count = 0;  // A variable to track login attempts
 string userID, password, id, pass;  // Strings to store user credentials
 
-void readCurrentRecord()
-{
-    ifstream file("current_record.txt");  // Open the file for reading
-
-    if(!file.is_open()){
-        // If the file does not exist, create it and initialize the quantities
-        ofstream newFile("current_record.txt");
-        int quantities[] = {20, 40, 75, 100, 100, 75};
-        string items[] = {"Single Rooms", "Twin Rooms", "Towels", "Bottles of Water", "Biscuits", "Pillows"};
-        for(int i = 0; i < 6; i++){
-            newFile << quantities[i] << endl;
-        }
-        newFile.close();
-        // Copy the quantities to the global variables
-        for(int i = 0; i < 6; i++){
-            switch(i){
-                case 0:
-                    Qsingle = quantities[i];
-                    Ssingle = 0;
-                    break;
-                case 1:
-                    Qtwin = quantities[i];
-                    Stwin = 0;
-                    break;
-                case 2:
-                    Qtowel = quantities[i];
-                    Stowel = 0;
-                    break;
-                case 3:
-                    Qwater = quantities[i];
-                    Swater = 0;
-                    break;
-                case 4:
-                    Qbiscuit = quantities[i];
-                    Sbiscuit = 0;
-                    break;
-                case 5:
-                    Qpillow = quantities[i];
-                    Spillow = 0;
-                    break;
-            }
-        }
-    }
-    else{
-        // If the file exists, read the quantities from the file
-        int quantities[6];
-        string items[6] = {"Single Rooms", "Twin Rooms", "Towels", "Bottles of Water", "Biscuits", "Pillows"};
-        for(int i = 0; i < 6; i++){
-            file >> quantities[i];
-        }
-        file.close();
-        // Copy the quantities to the global variables
-        for(int i = 0; i < 6; i++){
-            switch(i){
-                case 0:
-                    Qsingle = quantities[i];
-                    Ssingle = 20 - Qsingle;
-                    break;
-                case 1:
-                    Qtwin = quantities[i];
-                    Stwin = 40 - Qtwin;
-                    break;
-                case 2:
-                    Qtowel = quantities[i];
-                    Stowel = 75 - Qtowel;
-                    break;
-                case 3:
-                    Qwater = quantities[i];
-                    Swater = 100 - Qwater;
-                    break;
-                case 4:
-                    Qbiscuit = quantities[i];
-                    Sbiscuit = 100 - Qbiscuit;
-                    break;
-                case 5:
-                    Qpillow = quantities[i];
-                    Spillow = 75 - Qpillow;
-                    break;
-            }
-        }
-    }
-}
-
 int main()
 {
     readCurrentRecord();  // Read the current record from the file
@@ -547,6 +464,89 @@ int main()
             userMenu();
         }
     }
+
+    void readCurrentRecord()
+{
+    ifstream file("current_record.txt");  // Open the file for reading
+
+    if(!file.is_open()){
+        // If the file does not exist, create it and initialize the quantities
+        ofstream newFile("current_record.txt");
+        int quantities[] = {20, 40, 75, 100, 100, 75};
+        string items[] = {"Single Rooms", "Twin Rooms", "Towels", "Bottles of Water", "Biscuits", "Pillows"};
+        for(int i = 0; i < 6; i++){
+            newFile << quantities[i] << endl;
+        }
+        newFile.close();
+        // Copy the quantities to the global variables
+        for(int i = 0; i < 6; i++){
+            switch(i){
+                case 0:
+                    Qsingle = quantities[i];
+                    Ssingle = 0;
+                    break;
+                case 1:
+                    Qtwin = quantities[i];
+                    Stwin = 0;
+                    break;
+                case 2:
+                    Qtowel = quantities[i];
+                    Stowel = 0;
+                    break;
+                case 3:
+                    Qwater = quantities[i];
+                    Swater = 0;
+                    break;
+                case 4:
+                    Qbiscuit = quantities[i];
+                    Sbiscuit = 0;
+                    break;
+                case 5:
+                    Qpillow = quantities[i];
+                    Spillow = 0;
+                    break;
+            }
+        }
+    }
+    else{
+        // If the file exists, read the quantities from the file
+        int quantities[6];
+        string items[6] = {"Single Rooms", "Twin Rooms", "Towels", "Bottles of Water", "Biscuits", "Pillows"};
+        for(int i = 0; i < 6; i++){
+            file >> quantities[i];
+        }
+        file.close();
+        // Copy the quantities to the global variables
+        for(int i = 0; i < 6; i++){
+            switch(i){
+                case 0:
+                    Qsingle = quantities[i];
+                    Ssingle = 20 - Qsingle;
+                    break;
+                case 1:
+                    Qtwin = quantities[i];
+                    Stwin = 40 - Qtwin;
+                    break;
+                case 2:
+                    Qtowel = quantities[i];
+                    Stowel = 75 - Qtowel;
+                    break;
+                case 3:
+                    Qwater = quantities[i];
+                    Swater = 100 - Qwater;
+                    break;
+                case 4:
+                    Qbiscuit = quantities[i];
+                    Sbiscuit = 100 - Qbiscuit;
+                    break;
+                case 5:
+                    Qpillow = quantities[i];
+                    Spillow = 75 - Qpillow;
+                    break;
+            }
+        }
+    }
+}
 
     void resetCurrentRecord()
     {
