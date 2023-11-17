@@ -1,0 +1,76 @@
+Algorithm: Hotel Management System
+
+1.0 Initialization:
+   1.1 Initialize global variables for room and amenity quantities.
+
+2.0 Main Menu:
+   2.1 Read the current record for number of stocks for items from the file or create a new one if it doesn't exist.
+   2.2 Display the main menu options (register, login, forgot password, exit).
+   2.3 Read the user's choice.
+
+3.0 User Registration:
+   3.1 Prompt the user for a desired user ID and password.
+   3.2 Store the credentials in the "credentials.txt" file.
+   3.3 Call the login function.
+
+4.0 User Login:
+   4.1 Prompt the user for their user ID and password.
+   4.2 If admin credentials, call the AdminMenu function.
+   4.3 If regular user credentials, call the userMenu function.
+   4.4 Display a login error if credentials are invalid.
+
+5.0 Forgot Password:
+   5.1 Prompt the user for their user ID.
+   5.2 Search for the user's ID in the "credentials.txt" file.
+   5.3 If found, prompt the user for a new password and update the file.
+   5.4 Call the login function to log in the user with the new password.
+   5.5 Display a message if the user ID is not found.
+
+6.0 User Menu:
+   6.1 Display user menu options (room booking, amenities request, check bill, logout).
+   6.2 Read the user's choice.
+
+7.0 Room Booking:
+   7.1 Check room availability.
+   7.2 Prompt the user to select a room type.
+   7.3 Update the current record file and the user's bill report file.
+   7.4 Display a success message.
+   7.5 Call the userMenu function.
+
+8.0 Amenities Request:
+   8.1 Check if the user has booked a room.
+   8.2 Prompt the user to select an amenity.
+   8.3 Update the current record file and the user's bill report file.
+   8.4 Display a success message.
+   8.5 Call the userMenu function.
+
+9.0 Check Bill:
+   9.1 Check if the user has a bill report file.
+   9.2 Read the bill file, calculate total spending, and display the bill.
+   9.3 Prompt the user to exit or go back to the user menu.
+
+10.0 Reset Current Record (Admin):
+    10.1 Prompt the admin to enter the reset date.
+    10.2 Rename the current_record.txt file.
+    10.3 Call the readCurrentRecord function to create a new current_record.txt file.
+    10.4 Display a message indicating the successful file renaming.
+    10.5 Call the AdminMenu function.
+
+11.0 Admin Menu:
+    11.1 Display admin menu options (view room availability, view amenities, sales report, reset current record, logout).
+    11.2 Read the admin's choice.
+
+12.0 View Room Availability (Admin):
+    12.1 Display the number of available single and twin rooms.
+    12.2 Prompt the admin to exit or go back to the admin menu.
+
+13.0 View Amenities Availability (Admin):
+    13.1 Display the number of available amenities.
+    13.2 Prompt the admin to exit or go back to the admin menu.
+
+14.0 View Prices (Admin):
+    14.1 Display the prices for each item.
+
+15.0 Sales Report (Admin):
+    15.1 Calculate and display the total sales for all items.
+    15.2 Prompt the admin to exit or go back to the admin menu.
