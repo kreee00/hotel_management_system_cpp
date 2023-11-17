@@ -642,10 +642,10 @@ int main()
         system("cls");
         //Display number of available amenities
         cout << "\t\t\t ___________________         Amenities Availability        _______________________ \n";
-        cout << "\t\t\t Towel: " << Qtowel - Stowel << endl;
-        cout << "\t\t\t Pillow: " << Qpillow - Spillow << endl;
-        cout << "\t\t\t Water: " << Qwater - Swater << endl;
-        cout << "\t\t\t Biscuit: " << Qbiscuit - Sbiscuit << endl;
+        cout << "\t\t\t Towel: " << 75 - Stowel << endl;
+        cout << "\t\t\t Pillow: " << 75 - Spillow << endl;
+        cout << "\t\t\t Water: " << 100 - Swater << endl;
+        cout << "\t\t\t Biscuit: " << 100 - Sbiscuit << endl;
         cout << "\n\n";
 
         cout << "Do you want to exit? \n1. Yes\n2. No" << endl << "Action: ";
