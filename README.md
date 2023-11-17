@@ -104,6 +104,9 @@ Follow these step-by-step instructions to clone and run the Hotel Management Sys
 ### Explore the System
 7. Follow the intuitive on-screen instructions to navigate through the system. 🤓
 
+## Project DEMO 🎥
+https://youtu.be/Ce9GPFOKoU4
+
 That's it! You've successfully cloned, compiled, and run the Hotel Management System C++ project on your machine.
 
 ---
