@@ -1,20 +1,19 @@
 1.0 global variable initialization
     1.1 define global variable currentRecordFile = "current_record.txt"
-    1.2 define global variable adminCredentials = "admin_credentials.txt"
 
     // Declare global variables
-    1.3 int single = 65, twin = 100;
-    1.4 int Qsingle = 20, Qtwin = 40, Qtowel = 75, Qwater = 100, Qbiscuit = 100, Qpillow = 75;
-    1.5 int quant, choice, total_room = 0;
+    1.2 int single = 65, twin = 100;
+    1.3 int Qsingle = 20, Qtwin = 40, Qtowel = 75, Qwater = 100, Qbiscuit = 100, Qpillow = 75;
+    1.4 int quant, choice, total_room = 0;
 
     // Declare variables to track the total price for each item
-    1.6 int Total_rooms = 0, Total_single = 0, Total_twin = 0, Total_towel = 0, Total_water = 0, Total_biscuit = 0, Total_pillow = 0;
+    1.5 int Total_rooms = 0, Total_single = 0, Total_twin = 0, Total_towel = 0, Total_water = 0, Total_biscuit = 0, Total_pillow = 0;
 
     // Declare variable to track sold items
-    1.7 int Ssingle, Stwin, Stowel, Swater, Sbiscuit, Spillow;
+    1.6 int Ssingle, Stwin, Stowel, Swater, Sbiscuit, Spillow;
 
-    1.8 int count = 0;  // A variable to track login attempts
-    1.9 string userID, password, id, pass;  // Strings to store user credentials
+    1.7 int count = 0;  // A variable to track login attempts
+    1.8 string userID, password, id, pass;  // Strings to store user credentials
 
 2.0 function main()
     2.1 call readCurrentRecord() // Read initial quantities from currentRecordFile
@@ -27,28 +26,28 @@
         2.4.4 case 4.0: display farewell message and exit // User chooses to exit
         2.4.5 default: display invalid choice message and call main() // Invalid choice, go back to the main menu
 
-3.0 function login()
+3.0 module login()
     3.1 prompt user for User ID and Password using cout and cin
     3.2 check if credentials match admin credentials
         3.2.1 if yes, display admin login success message and call AdminMenu()
-        3.2.2 if no, check credentials in adminCredentials file
+        3.2.2 if no, check credentials in credentials.txt file
             3.2.2.1 if found, set login attempt count to 1, display user login success message, and call userMenu()
             3.2.2.2 if not found, display login error message and call main()
 
-4.0 function registration()
+4.0 module registration()
     4.1 prompt user for desired User ID and Password using cout and cin
-    4.2 store user's credentials in adminCredentials file
+    4.2 store user's credentials in credentials.txt file
     4.3 display registration success message
     4.4 call login()
 
-5.0 function forgot()
+5.0 module forgot()
     5.1 prompt user for User ID using cout and cin
-    5.2 search for user's credentials in adminCredentials file
+    5.2 search for user's credentials in credentials.txt file
     5.3 if found, prompt user for a new password, update the password in the file, display password updated message, and call login()
     5.4 if not found, display User ID not found message and call forgot()
 
-6.0 function userMenu()
-    6.1 displayUserMenuOptions() // Display user menu options
+6.0 module userMenu()
+    6.1 Display user menu options
     6.2 read user's choice using cin
     6.3 switch(choice)
         6.3.1 case 1.0: call roomBooking() // User chooses room booking
@@ -57,16 +56,16 @@
         6.3.4 case 4.0: display logout message and call main() // User chooses to log out
         6.3.5 default: display invalid choice message and call userMenu() // Invalid choice, go back to the user menu
 
-7.0 function roomBooking()
+7.0 module roomBooking()
     7.1 call readCurrentRecord() // Read current stock quantities from currentRecordFile
-    7.2 if no rooms available, display no rooms available message and return
+    7.2 if no rooms available, display no rooms available message and call userMenu()
     7.3 prompt user to select a room type using cout and cin
     7.4 update currentRecordFile to reflect booking
     7.5 create a user's bill report file (userID_bill_report.txt) and add room booking details
     7.6 calculate the room booking cost based on the selected room type
     7.7 display room booked successfully message and call userMenu()
 
-8.0 function amenitiesRequest()
+8.0 module amenitiesRequest()
     8.1 call readCurrentRecord() // Read current stock quantities from currentRecordFile
     8.2 check if the user has booked a room by looking for their bill report file (userID_bill_report.txt)
     8.3 if not booked, display must book a room first message and call userMenu()
@@ -76,25 +75,26 @@
     8.7 calculate the cost of the requested amenity
     8.8 display amenities request made successfully message and call userMenu()
 
-9.0 function checkBill()
+9.0 module checkBill()
     9.1 check if the user has a bill report file (userID_bill_report.txt)
     9.2 if no bill, display no bill to check message and prompt the user to exit or go back to the user menu
     9.3 read the bill report file, extract the total spending, and display bill details
     9.4 prompt the user to exit or go back to the user menu
 
-10.0 function readCurrentRecord()
-    10.1 open currentRecordFile for reading
+10.0 module readCurrentRecord()
+    10.1 open current_record.txt for reading
     10.2 if the file does not exist, create it, initialize quantities, and copy quantities to global variables
     10.3 if the file exists, read quantities from the file and copy to the global variables
 
-11.0 function resetCurrentRecord()
+11.0 module resetCurrentRecord()
     11.1 display reset current record message
-    11.2 prompt the user for the date of reset using cout and cin
+    11.2 prompt the admin for the date of reset using cout and cin
     11.3 rename currentRecordFile to [Date]_record.txt
     11.4 call readCurrentRecord()
+    11.5 call adminMenu()
 
-12.0 function AdminMenu()
-    12.1 displayAdminMenuOptions() // Display admin menu options
+12.0 module adminMenu()
+    12.1 Display admin menu options
     12.2 read admin input using cin
     12.3 switch(input)
         12.3.1 case 1.0: call viewRooms() // Admin chooses to view room availability
@@ -103,19 +103,21 @@
         12.3.4 case 4.0: call resetCurrentRecord() // Admin chooses to reset the current record
         12.3.5 case 5.0: call logout() // Admin chooses to log out
 
-13.0 function viewRooms()
+13.0 module viewRooms()
     13.1 call readCurrentRecord() // Read current stock quantities from currentRecordFile
     13.2 display available single and twin rooms
     13.3 prompt the admin to exit or go back to the admin menu
 
-14.0 function viewAmenities()
+14.0 module viewAmenities()
     14.1 display available amenities
     14.2 prompt the admin to exit or go back to the admin menu
 
-15.0 function viewPrices()
-    15.1 display prices for each item
+15.0 module viewPrices()
+    15.1 display prices for each room types
 
-16.0 function salesReport()
-    16.1 calculate total sales
+16.0 module salesReport()
+    16.1 calculate total sales from global variables
     16.2 display the sales report
     16.3 prompt the admin to exit or go back to the admin menu
+
+17.0 END
