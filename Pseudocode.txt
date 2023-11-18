@@ -1,200 +1,121 @@
-// Global variable initialization
-std::string currentRecordFile = "current_record.txt";
-int single = 65, twin = 100;
-int Qsingle = 20, Qtwin = 40, Qtowel = 75, Qwater = 100, Qbiscuit = 100, Qpillow = 75;
-int quant, choice, totalRoom = 0;
-int totalRooms = 0, totalSingle = 0, totalTwin = 0, totalTowel = 0, totalWater = 0, totalBiscuit = 0, totalPillow = 0;
-int sSingle, sTwin, sTowel, sWater, sBiscuit, sPillow;
-int count = 0;
-std::string userID, password, id, pass;
+1.0 global variable initialization
+    1.1 define global variable currentRecordFile = "current_record.txt"
+    1.2 define global variable adminCredentials = "admin_credentials.txt"
 
-// Main function
-void main() {
-    readCurrentRecord();
-    cout << "Welcome to the Hotel Management System!\n";
-    displayWelcomeMessageAndMenuOptions();
-    cout << "Enter your choice: ";
-    cin >> choice;
+    // Declare global variables
+    1.3 int single = 65, twin = 100;
+    1.4 int Qsingle = 20, Qtwin = 40, Qtowel = 75, Qwater = 100, Qbiscuit = 100, Qpillow = 75;
+    1.5 int quant, choice, total_room = 0;
 
-    switch (choice) {
-        case 1: registration(); break;
-        case 2: login(); break;
-        case 3: forgot(); break;
-        case 4: displayFarewellMessageAndExit(); break;
-        default: displayInvalidChoiceMessageAndCallMain(); break;
-    }
-}
+    // Declare variables to track the total price for each item
+    1.6 int Total_rooms = 0, Total_single = 0, Total_twin = 0, Total_towel = 0, Total_water = 0, Total_biscuit = 0, Total_pillow = 0;
 
-// Login function
-void login() {
-    cout << "Enter User ID: ";
-    cin >> userID;
-    cout << "Enter Password: ";
-    cin >> password;
+    // Declare variable to track sold items
+    1.7 int Ssingle, Stwin, Stowel, Swater, Sbiscuit, Spillow;
 
-    if (credentialsMatchAdminCredentials()) {
-        cout << "Admin login successful!\n";
-        adminMenu();
-    } else {
-        if (checkCredentialsInAdminCredentialsFile()) {
-            setLoginAttemptCountTo1();
-            cout << "User login successful!\n";
-            userMenu();
-        } else {
-            cout << "Login failed. Invalid credentials.\n";
-            main();
-        }
-    }
-}
+    1.8 int count = 0;  // A variable to track login attempts
+    1.9 string userID, password, id, pass;  // Strings to store user credentials
 
-// Registration function
-void registration() {
-    cout << "Enter desired User ID: ";
-    cin >> id;
-    cout << "Enter Password: ";
-    cin >> pass;
+2.0 function main()
+    2.1 call readCurrentRecord() // Read initial quantities from currentRecordFile
+    2.2 display welcome message and menu options // Display welcome message and menu options
+    2.3 read user's choice using cin
+    2.4 switch(choice)
+        2.4.1 case 1.0: call registration() // User chooses registration
+        2.4.2 case 2.0: call login() // User chooses login
+        2.4.3 case 3.0: call forgot() // User forgot password
+        2.4.4 case 4.0: display farewell message and exit // User chooses to exit
+        2.4.5 default: display invalid choice message and call main() // Invalid choice, go back to the main menu
 
-    storeUserCredentialsInAdminCredentialsFile();
-    cout << "Registration successful!\n";
-    login();
-}
+3.0 function login()
+    3.1 prompt user for User ID and Password using cout and cin
+    3.2 check if credentials match admin credentials
+        3.2.1 if yes, display admin login success message and call AdminMenu()
+        3.2.2 if no, check credentials in adminCredentials file
+            3.2.2.1 if found, set login attempt count to 1, display user login success message, and call userMenu()
+            3.2.2.2 if not found, display login error message and call main()
 
-// Forgot function
-void forgot() {
-    cout << "Enter User ID: ";
-    cin >> id;
+4.0 function registration()
+    4.1 prompt user for desired User ID and Password using cout and cin
+    4.2 store user's credentials in adminCredentials file
+    4.3 display registration success message
+    4.4 call login()
 
-    if (searchForUserCredentialsInAdminCredentialsFile()) {
-        cout << "Enter a new Password: ";
-        cin >> pass;
-        updatePasswordInFile();
-        cout << "Password updated successfully!\n";
-        login();
-    } else {
-        cout << "User ID not found.\n";
-        forgot();
-    }
-}
+5.0 function forgot()
+    5.1 prompt user for User ID using cout and cin
+    5.2 search for user's credentials in adminCredentials file
+    5.3 if found, prompt user for a new password, update the password in the file, display password updated message, and call login()
+    5.4 if not found, display User ID not found message and call forgot()
 
-// User Menu function
-void userMenu() {
-    displayUserMenuOptions();
-    cout << "Enter your choice: ";
-    cin >> choice;
+6.0 function userMenu()
+    6.1 displayUserMenuOptions() // Display user menu options
+    6.2 read user's choice using cin
+    6.3 switch(choice)
+        6.3.1 case 1.0: call roomBooking() // User chooses room booking
+        6.3.2 case 2.0: call amenitiesRequest() // User chooses amenities request
+        6.3.3 case 3.0: call checkBill() // User chooses to check the bill
+        6.3.4 case 4.0: display logout message and call main() // User chooses to log out
+        6.3.5 default: display invalid choice message and call userMenu() // Invalid choice, go back to the user menu
 
-    switch (choice) {
-        case 1: roomBooking(); break;
-        case 2: amenitiesRequest(); break;
-        case 3: checkBill(); break;
-        case 4: displayLogoutMessageAndCallMain(); break;
-        default: displayInvalidChoiceMessageAndCallUserMenu(); break;
-    }
-}
+7.0 function roomBooking()
+    7.1 call readCurrentRecord() // Read current stock quantities from currentRecordFile
+    7.2 if no rooms available, display no rooms available message and return
+    7.3 prompt user to select a room type using cout and cin
+    7.4 update currentRecordFile to reflect booking
+    7.5 create a user's bill report file (userID_bill_report.txt) and add room booking details
+    7.6 calculate the room booking cost based on the selected room type
+    7.7 display room booked successfully message and call userMenu()
 
-// Room Booking function
-void roomBooking() {
-    readCurrentRecord();
+8.0 function amenitiesRequest()
+    8.1 call readCurrentRecord() // Read current stock quantities from currentRecordFile
+    8.2 check if the user has booked a room by looking for their bill report file (userID_bill_report.txt)
+    8.3 if not booked, display must book a room first message and call userMenu()
+    8.4 prompt the user to select an amenity using cout and cin
+    8.5 add the amenity to the bill report file
+    8.6 update stocks in currentRecordFile
+    8.7 calculate the cost of the requested amenity
+    8.8 display amenities request made successfully message and call userMenu()
 
-    if (noRoomsAvailable()) {
-        cout << "No rooms available.\n";
-        return;
-    }
+9.0 function checkBill()
+    9.1 check if the user has a bill report file (userID_bill_report.txt)
+    9.2 if no bill, display no bill to check message and prompt the user to exit or go back to the user menu
+    9.3 read the bill report file, extract the total spending, and display bill details
+    9.4 prompt the user to exit or go back to the user menu
 
-    promptUserToSelectRoomType();
-    updateCurrentRecordFileToReflectBooking();
-    createUserBillReportFile();
-    calculateRoomBookingCost();
-    cout << "Room booked successfully!\n";
-    userMenu();
-}
+10.0 function readCurrentRecord()
+    10.1 open currentRecordFile for reading
+    10.2 if the file does not exist, create it, initialize quantities, and copy quantities to global variables
+    10.3 if the file exists, read quantities from the file and copy to the global variables
 
-// Amenities Request function
-void amenitiesRequest() {
-    readCurrentRecord();
+11.0 function resetCurrentRecord()
+    11.1 display reset current record message
+    11.2 prompt the user for the date of reset using cout and cin
+    11.3 rename currentRecordFile to [Date]_record.txt
+    11.4 call readCurrentRecord()
 
-    if (userHasNotBookedRoom()) {
-        cout << "You must book a room first.\n";
-        userMenu();
-    }
+12.0 function AdminMenu()
+    12.1 displayAdminMenuOptions() // Display admin menu options
+    12.2 read admin input using cin
+    12.3 switch(input)
+        12.3.1 case 1.0: call viewRooms() // Admin chooses to view room availability
+        12.3.2 case 2.0: call viewAmenities() // Admin chooses to view available amenities
+        12.3.3 case 3.0: call salesReport() // Admin chooses to view the sales report
+        12.3.4 case 4.0: call resetCurrentRecord() // Admin chooses to reset the current record
+        12.3.5 case 5.0: call logout() // Admin chooses to log out
 
-    promptUserToSelectAmenity();
-    addAmenityToBillReportFile();
-    updateStocksInCurrentRecordFile();
-    calculateCostOfRequestedAmenity();
-    cout << "Amenities request made successfully!\n";
-    userMenu();
-}
+13.0 function viewRooms()
+    13.1 call readCurrentRecord() // Read current stock quantities from currentRecordFile
+    13.2 display available single and twin rooms
+    13.3 prompt the admin to exit or go back to the admin menu
 
-// Check Bill function
-void checkBill() {
-    if (userHasNoBillReportFile()) {
-        cout << "No bill to check.\n";
-        promptUserToExitOrGoBackToUserMenu();
-    }
+14.0 function viewAmenities()
+    14.1 display available amenities
+    14.2 prompt the admin to exit or go back to the admin menu
 
-    readBillReportFile();
-    extractTotalSpending();
-    displayBillDetails();
-    promptUserToExitOrGoBackToUserMenu();
-}
+15.0 function viewPrices()
+    15.1 display prices for each item
 
-// Read Current Record function
-void readCurrentRecord() {
-    openCurrentRecordFileForReading();
-
-    if (fileDoesNotExist()) {
-        createFileAndInitializeQuantities();
-    } else {
-        readQuantitiesFromFileAndCopyToGlobalVariables();
-    }
-}
-
-// Reset Current Record function
-void resetCurrentRecord() {
-    cout << "Resetting current record...\n";
-    promptUserForDateOfReset();
-    renameCurrentRecordFile();
-    readCurrentRecord();
-}
-
-// Admin Menu function
-void adminMenu() {
-    displayAdminMenuOptions();
-    cout << "Enter your choice: ";
-    cin >> choice;
-
-    switch (choice) {
-        case 1: viewRooms(); break;
-        case 2: viewAmenities(); break;
-        case 3: salesReport(); break;
-        case 4: resetCurrentRecord(); break;
-        case 5: logout(); break;
-    }
-}
-
-// View Rooms function
-void viewRooms() {
-    readCurrentRecord();
-    displayAvailableSingleAndTwinRooms();
-    promptAdminToExitOrGoBackToAdminMenu();
-}
-
-// View Amenities function
-void viewAmenities() {
-    displayAvailableAmenities();
-    promptAdminToExitOrGoBackToAdminMenu();
-}
-
-// View Prices function
-void viewPrices() {
-    displayPricesForEachItem();
-}
-
-// Sales Report function
-void salesReport() {
-    calculateTotalSales();
-    displaySalesReport();
-    promptAdminToExitOrGoBackToAdminMenu();
-}
-
-// END
+16.0 function salesReport()
+    16.1 calculate total sales
+    16.2 display the sales report
+    16.3 prompt the admin to exit or go back to the admin menu
