@@ -1,0 +1,100 @@
+1.0 Initialization:
+   1.1 Declare global variables for room and amenity quantities.
+   1.2 Define modules for resetting the current record, reading the current record, user login, registration, password recovery, user menu, admin menu, room booking, amenities request, check bill, view rooms, view amenities, view prices, sales report.
+
+2.0 Main Module:
+   2.1 Call the readCurrentRecord module to initialize or read the current record.
+   2.2 Display the main menu options:
+       2.2.1 Register
+       2.2.2 Login
+       2.2.3 Forgot Password
+       2.2.4 Exit
+   2.3 Read the user's choice.
+   2.4 Switch based on the user's choice:
+       2.4.1 Case 1: Call registration module
+       2.4.2 Case 2: Call login module
+       2.4.3 Case 3: Call forgot module
+       2.4.4 Case 4: Display farewell message and terminate the program
+       2.4.5 Default: Display an invalid choice message and call the main module recursively.
+
+3.0 Read Current Record Module:
+   3.1 Open the current_record.txt file for reading.
+   3.2 If the file exists:
+       3.2.1 Read the quantities of each item from the file.
+       3.2.2 Close the file.
+       3.2.3 Copy the quantities to global variables.
+   3.3 If the file does not exist:
+       3.3.1 Create the file and initialize quantities.
+       3.3.2 Close the new file.
+       3.3.3 Copy initialized quantities to global variables.
+
+4.0 Reset Current Record Module (Admin):
+   4.1 Display a reset current record header.
+   4.2 Prompt the admin to enter the reset date.
+   4.3 Rename the current_record.txt file to [Date]_record.txt.
+   4.4 Call the readCurrentRecord module to create a new current_record.txt file.
+   4.5 Display a message indicating the successful file renaming.
+   4.6 Call the AdminMenu module.
+
+5.0 User Login Module:
+   5.1 Display a login header.
+   5.2 Prompt the user to enter their user ID and password.
+   5.3 If admin credentials, call AdminMenu module.
+   5.4 If regular user credentials, call userMenu module.
+   5.5 Display a login error if credentials are invalid.
+
+6.0 User Registration Module:
+   6.1 Display a registration header.
+   6.2 Prompt the user for a desired user ID and password.
+   6.3 Store the credentials in the "credentials.txt" file.
+   6.4 Call the login module.
+
+7.0 Forgot Password Module:
+   7.1 Display a forgot password header.
+   7.2 Prompt the user for their user ID.
+   7.3 Search for the user's ID in the "credentials.txt" file.
+   7.4 If found, prompt the user for a new password and update the file.
+   7.5 Call the login module to log in the user with the new password.
+   7.6 Display a message if the user ID is not found.
+
+8.0 User Menu Module:
+   8.1 Display user menu options (room booking, amenities request, check bill, logout).
+   8.2 Read the user's choice.
+
+9.0 Room Booking Module:
+   9.1 Check room availability.
+   9.2 Prompt the user to select a room type.
+   9.3 Update the current record file and the user's bill report file.
+   9.4 Display a success message.
+   9.5 Call the userMenu module.
+
+10.0 Amenities Request Module:
+    10.1 Check if the user has booked a room.
+    10.2 Prompt the user to select an amenity.
+    10.3 Update the current record file and the user's bill report file.
+    10.4 Display a success message.
+    10.5 Call the userMenu module.
+
+11.0 Check Bill Module:
+    11.1 Check if the user has a bill report file.
+    11.2 Read the bill file, calculate total spending, and display the bill.
+    11.3 Prompt the user to exit or go back to the user menu.
+
+12.0 Admin Menu Module:
+    12.1 Display admin menu options (view room availability, view amenities, sales report, reset current record, logout).
+    12.2 Read the admin's choice.
+
+13.0 View Room Availability Module (Admin):
+    13.1 Display the number of available single and twin rooms.
+    13.2 Prompt the admin to exit or go back to the admin menu.
+
+14.0 View Amenities Availability Module (Admin):
+    14.1 Display the number of available amenities.
+    14.2 Prompt the admin to exit or go back to the admin menu.
+
+15.0 View Prices Module (Admin):
+    15.1 Display the prices for each item.
+
+16.0 Sales Report Module (Admin):
+    16.1 Calculate and display the total sales for all items.
+    16.2 Prompt the admin to exit or go back to the admin menu.
