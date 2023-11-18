@@ -4,6 +4,7 @@ Welcome to the One Night Hotel Management System! 🤗�
 
 ## Table of Contents 📚
 - [Project Overview](#project-overview-)
+- [Project DEMO Video](#project-DEMO-)
 - [Team Members](#team-members-)
 - [University Information](#university-information-)
 - [Project Features](#project-features-)
@@ -19,6 +20,9 @@ Welcome to the One Night Hotel Management System! 🤗�
 ## Project Overview 🌟
 
 This comprehensive hotel management system for the "One Night Hotel" is a user-friendly platform that seamlessly integrates all aspects of hotel operations. From user registration to room booking, amenities requests, bill checking, and administrative functionalities, this system streamlines the hotel's processes for both guests and staff. 🤝
+
+## Project DEMO 🎥
+https://youtu.be/Ce9GPFOKoU4
 
 ## Team Members 👥
 
@@ -103,9 +107,6 @@ Follow these step-by-step instructions to clone and run the Hotel Management Sys
 
 ### Explore the System
 7. Follow the intuitive on-screen instructions to navigate through the system. 🤓
-
-## Project DEMO 🎥
-https://youtu.be/Ce9GPFOKoU4
 
 That's it! You've successfully cloned, compiled, and run the Hotel Management System C++ project on your machine.
 
