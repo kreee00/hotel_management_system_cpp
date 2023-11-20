@@ -20,6 +20,9 @@ Welcome to the One Night Hotel Management System! 🤗�
 
 This comprehensive hotel management system for the "One Night Hotel" is a user-friendly platform that seamlessly integrates all aspects of hotel operations. From user registration to room booking, amenities requests, bill checking, and administrative functionalities, this system streamlines the hotel's processes for both guests and staff. 🤝
 
+## Presentation
+https://www.canva.com/design/DAF0Pw9HD_U/G3fjpXDIVp-wl3kB4YkvZA/edit?utm_content=DAF0Pw9HD_U&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 ## Team Members 👥
 
 - **Mohamad Akram bin Mohd Faisal**
