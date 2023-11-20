@@ -4,6 +4,7 @@ Welcome to the One Night Hotel Management System! 🤗�
 
 ## Table of Contents 📚
 - [Project Overview](#project-overview-)
+- [Project DEMO Video](#project-DEMO-)
 - [Team Members](#team-members-)
 - [University Information](#university-information-)
 - [Project Features](#project-features-)
@@ -22,6 +23,9 @@ This comprehensive hotel management system for the "One Night Hotel" is a user-f
 
 ## Presentation
 https://www.canva.com/design/DAF0Pw9HD_U/G3fjpXDIVp-wl3kB4YkvZA/edit?utm_content=DAF0Pw9HD_U&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
+## Project DEMO 🎥
+https://youtu.be/Ce9GPFOKoU4
 
 ## Team Members 👥
 
@@ -106,9 +110,6 @@ Follow these step-by-step instructions to clone and run the Hotel Management Sys
 
 ### Explore the System
 7. Follow the intuitive on-screen instructions to navigate through the system. 🤓
-
-## Project DEMO 🎥
-https://youtu.be/Ce9GPFOKoU4
 
 That's it! You've successfully cloned, compiled, and run the Hotel Management System C++ project on your machine.
 
